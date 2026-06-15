@@ -1,5 +1,4 @@
 import express from 'express';
-import sqlite3 from 'sqlite3';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -7,7 +6,6 @@ import Parser from 'rss-parser';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-const db = new sqlite3.Database(path.join(__dirname, 'base.db'));
 const parser = new Parser({ 
     timeout: 8000, 
     headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' } 
