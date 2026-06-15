@@ -5,55 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global News Hub</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f4f9; padding: 20px; color: #333; }
-        h1 { text-align: center; color: #2c3e50; }
-        #news-container { max-width: 800px; margin: 0 auto; display: grid; gap: 15px; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .card h3 { margin: 0 0 10px 0; font-size: 1.2em; }
-        .card a { color: #3498db; text-decoration: none; font-weight: bold; }
-        .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-bottom: 5px; background: #eee; }
-        #loader { text-align: center; font-size: 1.2em; color: #7f8c8d; margin-top: 50px; }
+        body { font-family: -apple-system, sans-serif; background: #f4f4f9; padding: 20px; color: #333; }
+        #news-container { max-width: 800px; margin: 0 auto; display: grid; gap: 20px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 180px; object-fit: cover; display: block; }
+        .content { padding: 20px; }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75em; background: #e0e7ff; color: #4338ca; margin-bottom: 10px; }
+        h3 { margin: 0 0 10px 0; font-size: 1.25em; line-height: 1.4; }
+        a { color: #4338ca; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <h1>Noticias Actualizadas</h1>
-    <div id="loader">Cargando noticias...</div>
     <div id="news-container"></div>
 
     <script>
         async function fetchNews() {
             const container = document.getElementById('news-container');
-            const loader = document.getElementById('loader');
-
             try {
-                const response = await fetch('/api/news');
-                const data = await response.json();
-
-                loader.style.display = 'none';
-
-                if (data.length === 0) {
-                    container.innerHTML = '<p style="text-align:center;">No hay noticias disponibles en este momento. Inténtalo de nuevo en unos minutos.</p>';
-                    return;
-                }
-
-                container.innerHTML = ''; // Limpiar loader
-                data.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'card';
-                    div.innerHTML = `
-                        <span class="badge">${item.category} | ${item.name}</span>
-                        <h3>${item.title}</h3>
-                        <a href="${item.link}" target="_blank">Leer más →</a>
-                    `;
-                    container.appendChild(div);
-                });
-            } catch (err) {
-                loader.innerText = "Error cargando noticias. Por favor, recarga.";
-                console.error("Error:", err);
-            }
+                const res = await fetch('/api/news');
+                const data = await res.json();
+                container.innerHTML = data.map(item => `
+                    <div class="card">
+                        ${item.image_url ? `<img src="${item.image_url}" alt="Noticia">` : ''}
+                        <div class="content">
+                            <span class="badge">${item.category} • ${item.name}</span>
+                            <h3>${item.title}</h3>
+                            <a href="${item.link}" target="_blank">Leer completa →</a>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) { container.innerHTML = '<p>Error al cargar.</p>'; }
         }
-
         fetchNews();
     </script>
 </body>

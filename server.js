@@ -14,18 +14,15 @@ const parser = new Parser({
     headers: { 'User-Agent': 'Mozilla/5.0' } 
 });
 
-// Configuración de conexión a PostgreSQL (Neon)
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }
 });
 
-client.connect()
-    .then(() => console.log('✅ Conectado a PostgreSQL en Neon'))
-    .catch(err => console.error('❌ Error de conexión BD:', err));
+client.connect();
 
 async function updateNews() {
-    console.log("🔄 Sincronizando noticias...");
+    console.log("🔄 Sincronizando...");
     try {
         const rawData = fs.readFileSync(path.join(__dirname, 'feeds.json'), 'utf8');
         const { feeds } = JSON.parse(rawData);
@@ -34,23 +31,26 @@ async function updateNews() {
         for (const feed of feeds) {
             try {
                 const data = await parser.parseURL(feed.url);
-                const items = data.items.slice(0, 3).map(item => [feed.cat, feed.name, item.title, item.link]);
+                // Extraemos imagen si existe (o enclosure o media:content)
+                const items = data.items.slice(0, 3).map(item => {
+                    const img = item.enclosure?.url || item.image?.url || null;
+                    return [feed.cat, feed.name, item.title, item.link, img];
+                });
                 allResults.push(...items);
-            } catch (e) { console.log(`⚠️ Skip: ${feed.name}`); }
+            } catch (e) { console.log(`❌ Error ${feed.name}: ${e.message}`); }
         }
 
-        // Transacción para vaciar y rellenar
         await client.query('BEGIN');
         await client.query('DELETE FROM news');
-        const query = 'INSERT INTO news (category, name, title, link) VALUES ($1, $2, $3, $4)';
+        const query = 'INSERT INTO news (category, name, title, link, image_url) VALUES ($1, $2, $3, $4, $5)';
         for (const row of allResults) {
             await client.query(query, row);
         }
         await client.query('COMMIT');
-        console.log(`✅ ${allResults.length} artículos actualizados.`);
+        console.log(`✅ ${allResults.length} artículos actualizados con imágenes.`);
     } catch (e) {
         await client.query('ROLLBACK');
-        console.error("Error en sincronización:", e);
+        console.error("Error BD:", e);
     }
 }
 
@@ -64,7 +64,8 @@ app.get('/api/news', async (req, res) => {
 app.use(express.static('.'));
 
 app.listen(4000, () => {
-    console.log('🌍 Servidor activo en puerto 4000');
+    console.log('🌍 Servidor activo');
     updateNews();
-    setInterval(updateNews, 3600000); // Actualiza cada hora
+    // 900,000ms = 15 minutos
+    setInterval(updateNews, 900000); 
 });
