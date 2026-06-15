@@ -5,86 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global News Hub</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --bg: #f4f7f6; --card-bg: #ffffff; --accent: #0984e3; --text: #2d3436; }
-        
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        
-        /* BARRA DE NAVEGACIÓN */
-        nav { margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-        nav button { 
-            padding: 8px 16px; border: none; border-radius: 20px; 
-            background: #e0e0e0; cursor: pointer; transition: 0.3s; font-weight: 500;
-        }
-        nav button:hover, nav button.active { background: var(--accent); color: white; }
-
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .card { background: var(--card-bg); padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        h3 { font-size: 1.1rem; line-height: 1.4; margin: 10px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .cat-badge { font-size: 0.7rem; font-weight: 700; color: var(--accent); text-transform: uppercase; }
-        .source { font-size: 0.8rem; color: #636e72; margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee; }
-        a { text-decoration: none; color: inherit; display: block; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f4f9; padding: 20px; color: #333; }
+        h1 { text-align: center; color: #2c3e50; }
+        #news-container { max-width: 800px; margin: 0 auto; display: grid; gap: 15px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .card h3 { margin: 0 0 10px 0; font-size: 1.2em; }
+        .card a { color: #3498db; text-decoration: none; font-weight: bold; }
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-bottom: 5px; background: #eee; }
+        #loader { text-align: center; font-size: 1.2em; color: #7f8c8d; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header style="text-align: center; margin-bottom: 30px;">
-        <h1>Global News Hub</h1>
-    </header>
+    <h1>Noticias Actualizadas</h1>
+    <div id="loader">Cargando noticias...</div>
+    <div id="news-container"></div>
 
-    <nav id="nav-filters"></nav>
+    <script>
+        async function fetchNews() {
+            const container = document.getElementById('news-container');
+            const loader = document.getElementById('loader');
 
-    <div class="news-grid" id="news-container"></div>
-</div>
+            try {
+                const response = await fetch('/api/news');
+                const data = await response.json();
 
-<script>
-    let allNews = []; // Variable global para guardar las noticias
+                loader.style.display = 'none';
 
-    async function init() {
-        const res = await fetch('/api/news');
-        allNews = await res.json();
-        
-        // Crear botones de filtro
-        const categories = ['Todas', ...new Set(allNews.map(n => n.category))];
-        const nav = document.getElementById('nav-filters');
-        
-        categories.forEach(cat => {
-            const btn = document.createElement('button');
-            btn.innerText = cat;
-            btn.onclick = () => filterNews(btn, cat);
-            if(cat === 'Todas') btn.classList.add('active');
-            nav.appendChild(btn);
-        });
+                if (data.length === 0) {
+                    container.innerHTML = '<p style="text-align:center;">No hay noticias disponibles en este momento. Inténtalo de nuevo en unos minutos.</p>';
+                    return;
+                }
 
-        render(allNews);
-    }
+                container.innerHTML = ''; // Limpiar loader
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'card';
+                    div.innerHTML = `
+                        <span class="badge">${item.category} | ${item.name}</span>
+                        <h3>${item.title}</h3>
+                        <a href="${item.link}" target="_blank">Leer más →</a>
+                    `;
+                    container.appendChild(div);
+                });
+            } catch (err) {
+                loader.innerText = "Error cargando noticias. Por favor, recarga.";
+                console.error("Error:", err);
+            }
+        }
 
-    function render(data) {
-        const container = document.getElementById('news-container');
-        container.innerHTML = data.map(item => `
-            <div class="card">
-                <a href="${item.link}" target="_blank">
-                    <span class="cat-badge">${item.category}</span>
-                    <h3>${item.title}</h3>
-                    <div class="source">📍 ${item.name}</div>
-                </a>
-            </div>
-        `).join('');
-    }
-
-    function filterNews(btn, cat) {
-        // Actualizar UI de botones
-        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Filtrar datos
-        const filtered = cat === 'Todas' ? allNews : allNews.filter(n => n.category === cat);
-        render(filtered);
-    }
-
-    init();
-</script>
+        fetchNews();
+    </script>
 </body>
 </html>
