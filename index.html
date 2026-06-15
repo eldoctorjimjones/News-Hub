@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global News Hub</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --bg: #f4f7f6; --card-bg: #ffffff; --accent: #0984e3; --text: #2d3436; }
+        
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        /* BARRA DE NAVEGACIÓN */
+        nav { margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        nav button { 
+            padding: 8px 16px; border: none; border-radius: 20px; 
+            background: #e0e0e0; cursor: pointer; transition: 0.3s; font-weight: 500;
+        }
+        nav button:hover, nav button.active { background: var(--accent); color: white; }
+
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .card { background: var(--card-bg); padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        h3 { font-size: 1.1rem; line-height: 1.4; margin: 10px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .cat-badge { font-size: 0.7rem; font-weight: 700; color: var(--accent); text-transform: uppercase; }
+        .source { font-size: 0.8rem; color: #636e72; margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee; }
+        a { text-decoration: none; color: inherit; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header style="text-align: center; margin-bottom: 30px;">
+        <h1>Global News Hub</h1>
+    </header>
+
+    <nav id="nav-filters"></nav>
+
+    <div class="news-grid" id="news-container"></div>
+</div>
+
+<script>
+    let allNews = []; // Variable global para guardar las noticias
+
+    async function init() {
+        const res = await fetch('/api/news');
+        allNews = await res.json();
+        
+        // Crear botones de filtro
+        const categories = ['Todas', ...new Set(allNews.map(n => n.category))];
+        const nav = document.getElementById('nav-filters');
+        
+        categories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.innerText = cat;
+            btn.onclick = () => filterNews(btn, cat);
+            if(cat === 'Todas') btn.classList.add('active');
+            nav.appendChild(btn);
+        });
+
+        render(allNews);
+    }
+
+    function render(data) {
+        const container = document.getElementById('news-container');
+        container.innerHTML = data.map(item => `
+            <div class="card">
+                <a href="${item.link}" target="_blank">
+                    <span class="cat-badge">${item.category}</span>
+                    <h3>${item.title}</h3>
+                    <div class="source">📍 ${item.name}</div>
+                </a>
+            </div>
+        `).join('');
+    }
+
+    function filterNews(btn, cat) {
+        // Actualizar UI de botones
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Filtrar datos
+        const filtered = cat === 'Todas' ? allNews : allNews.filter(n => n.category === cat);
+        render(filtered);
+    }
+
+    init();
+</script>
+</body>
+</html>
