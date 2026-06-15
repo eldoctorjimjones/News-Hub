@@ -1,63 +1,70 @@
 import express from 'express';
+import pg from 'pg';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Parser from 'rss-parser';
+import 'dotenv/config';
 
+const { Client } = pg;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const parser = new Parser({ 
-    timeout: 8000, 
-    headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' } 
+    timeout: 10000, 
+    headers: { 'User-Agent': 'Mozilla/5.0' } 
 });
 
-// Crear tabla si no existe
-db.serialize(() => {
-    db.run("CREATE TABLE IF NOT EXISTS news (category TEXT, name TEXT, title TEXT, link TEXT)");
+// Configuración de conexión a PostgreSQL (Neon)
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
 });
 
-// Lógica de actualización masiva
+client.connect()
+    .then(() => console.log('✅ Conectado a PostgreSQL en Neon'))
+    .catch(err => console.error('❌ Error de conexión BD:', err));
+
 async function updateNews() {
-    console.log(`🔄 Iniciando actualización...`);
-    
-    // Leer el archivo de fuentes
-    const rawData = fs.readFileSync(path.join(__dirname, 'feeds.json'), 'utf8');
-    const { feeds } = JSON.parse(rawData);
-    const allResults = [];
+    console.log("🔄 Sincronizando noticias...");
+    try {
+        const rawData = fs.readFileSync(path.join(__dirname, 'feeds.json'), 'utf8');
+        const { feeds } = JSON.parse(rawData);
+        let allResults = [];
 
-    for (const feed of feeds) {
-        try {
-            const data = await parser.parseURL(feed.url);
-            const items = data.items.slice(0, 3).map(item => ({
-                cat: feed.cat, name: feed.name, title: item.title, link: item.link
-            }));
-            allResults.push(...items);
-            console.log(`✅ ${feed.name} OK`);
-        } catch (e) {
-            console.error(`❌ Fallo en ${feed.name}: ${e.message}`);
+        for (const feed of feeds) {
+            try {
+                const data = await parser.parseURL(feed.url);
+                const items = data.items.slice(0, 3).map(item => [feed.cat, feed.name, item.title, item.link]);
+                allResults.push(...items);
+            } catch (e) { console.log(`⚠️ Skip: ${feed.name}`); }
         }
-    }
 
-    // Guardado eficiente (transacción atómica)
-    db.serialize(() => {
-        db.run("BEGIN TRANSACTION");
-        db.run("DELETE FROM news");
-        const stmt = db.prepare("INSERT INTO news (category, name, title, link) VALUES (?, ?, ?, ?)");
-        allResults.forEach(i => stmt.run(i.cat, i.name, i.title, i.link));
-        stmt.finalize();
-        db.run("COMMIT");
-    });
-    console.log(`🎉 ¡Éxito! Base de datos actualizada con ${allResults.length} noticias.`);
+        // Transacción para vaciar y rellenar
+        await client.query('BEGIN');
+        await client.query('DELETE FROM news');
+        const query = 'INSERT INTO news (category, name, title, link) VALUES ($1, $2, $3, $4)';
+        for (const row of allResults) {
+            await client.query(query, row);
+        }
+        await client.query('COMMIT');
+        console.log(`✅ ${allResults.length} artículos actualizados.`);
+    } catch (e) {
+        await client.query('ROLLBACK');
+        console.error("Error en sincronización:", e);
+    }
 }
 
-app.get('/api/news', (req, res) => {
-    db.all("SELECT * FROM news", (err, rows) => res.json(rows || []));
+app.get('/api/news', async (req, res) => {
+    try {
+        const result = await client.query('SELECT * FROM news');
+        res.json(result.rows);
+    } catch (e) { res.status(500).send(e.message); }
 });
 
 app.use(express.static('.'));
 
 app.listen(4000, () => {
-    console.log('🌍 Servidor activo en http://localhost:4000');
-    updateNews(); // Ejecutar al arrancar
-    setInterval(updateNews, 3600000); // Actualización automática cada hora
+    console.log('🌍 Servidor activo en puerto 4000');
+    updateNews();
+    setInterval(updateNews, 3600000); // Actualiza cada hora
 });
