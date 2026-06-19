@@ -1,7 +1,6 @@
 {
   "name": "el-doctor-news-hub",
   "version": "1.0.0",
-  "description": "Dashboard de noticias automatizado",
   "type": "module",
   "main": "server.js",
   "scripts": {
@@ -10,7 +9,6 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
-    "metadata-scraper": "^0.3.5",
     "pg": "^8.13.0",
     "rss-parser": "^3.13.0"
   },
