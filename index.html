@@ -1,32 +1,62 @@
-<script>
-    function render(data) {
-        const container = document.getElementById('news-container');
-        const isHornyView = document.querySelector('button.active').innerText.includes('Horny Report');
-        
-        if (isHornyView) {
-            const grupos = data.reduce((acc, item) => {
-                if (item.category === 'Horny Report') {
-                    if (!acc[item.name]) acc[item.name] = [];
-                    acc[item.name].push(item);
-                }
-                return acc;
-            }, {});
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor News Hub</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; padding: 20px; }
+        .nav { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+        button { padding: 10px; cursor: pointer; }
+        .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .error { color: red; text-align: center; }
+    </style>
+</head>
+<body>
 
-            container.innerHTML = Object.keys(grupos).map(nombreProg => `
-                <details open style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px;">
-                    <summary style="cursor: pointer; font-weight: 800; font-size: 1.4rem; color: #dc2626; padding-bottom: 10px;">${nombreProg}</summary>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 10px;">
-                        ${grupos[nombreProg].map(n => `
-                            <div style="border: 1px solid #f1f5f9; border-radius: 12px; padding: 10px; display: flex; flex-direction: column;">
-                                ${n.image_url ? `<img src="${n.image_url}" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">` : ''}
-                                <a href="${n.link}" target="_blank" style="text-decoration: none; color: #1e293b; font-weight: 600; font-size: 0.9rem;">${n.title}</a>
-                            </div>
-                        `).join('')}
-                    </div>
-                </details>
-            `).join('');
-        } else {
-            // ... (resto de tu vista normal)
+    <div class="nav">
+        <button onclick="render('Todas')">Todas</button>
+        <button onclick="render('Horny Report')">Horny Report 🎙️</button>
+    </div>
+
+    <div id="container">Cargando noticias...</div>
+
+    <script>
+        let globalNews = [];
+
+        async function init() {
+            try {
+                const response = await fetch('/api/news');
+                if (!response.ok) throw new Error('Error al conectar con la API');
+                globalNews = await response.json();
+                render('Todas');
+            } catch (err) {
+                document.getElementById('container').innerHTML = `<p class="error">Error: ${err.message}</p>`;
+            }
         }
-    }
-</script>
+
+        function render(categoria) {
+            const container = document.getElementById('container');
+            let data = globalNews;
+
+            if (categoria !== 'Todas') {
+                data = globalNews.filter(n => n.category === categoria);
+            }
+
+            if (data.length === 0) {
+                container.innerHTML = '<p style="text-align:center;">No hay noticias disponibles.</p>';
+                return;
+            }
+
+            container.innerHTML = data.map(n => `
+                <div class="card">
+                    <strong>[${n.category || 'General'}]</strong> ${n.title}
+                    <br><a href="${n.link}" target="_blank">Leer más</a>
+                </div>
+            `).join('');
+        }
+
+        // Llamada inicial
+        init();
+    </script>
+</body>
+</html>
