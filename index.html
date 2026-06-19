@@ -4,25 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Doctor News Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Importamos Inter para la web y Stalinist One para el look Soviético -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Stalinist+One&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2563eb; --bg: #f8fafc; --text: #1e293b; }
+        :root { 
+            --primary: #dc2626; /* Rojo Soviético */
+            --bg: #f8fafc; 
+            --text: #1e293b; 
+        }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
         .container { max-width: 1200px; margin: 0 auto; }
+        
         header { text-align: center; margin-bottom: 40px; }
+        
+        /* Título en Fuente Soviética */
+        header h1 { 
+            font-family: 'Stalinist One', cursive; 
+            font-size: 2.8rem; 
+            color: var(--primary); 
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0px #0f172a;
+        }
+        header p {
+            color: #64748b; 
+            font-size: 1.1rem; 
+            margin-top: 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
         
         #search-bar { width: 100%; max-width: 600px; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; font-size: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
         button { padding: 10px 20px; border: none; border-radius: 25px; cursor: pointer; background: #e2e8f0; font-weight: 600; transition: all 0.2s; color: var(--text); font-size: 0.9rem; }
         button:hover { background: #cbd5e1; transform: translateY(-2px); }
-        button.active { background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3); }
+        button.active { background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3); }
         
         #news-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
         .card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
         .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; background: #e2e8f0; }
         .card h3 { font-size: 1.15rem; line-height: 1.5; margin: 0 0 12px 0; color: #0f172a; }
-        .card small { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; padding: 4px 10px; background: #f1f5f9; border-radius: 6px; display: inline-block; width: fit-content; margin-bottom: 15px; color: var(--primary); }
+        .card small { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; padding: 4px 10px; background: #fee2e2; border-radius: 6px; display: inline-block; width: fit-content; margin-bottom: 15px; color: var(--primary); }
         .card .link-container { margin-top: auto; padding-top: 15px; border-top: 1px solid #f1f5f9; }
         .card a { color: var(--primary); font-weight: 600; text-decoration: none; font-size: 0.95rem; }
         .card a:hover { text-decoration: underline; }
@@ -31,8 +55,8 @@
 <body>
     <div class="container">
         <header>
-            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">🌍 El Doctor News Hub</h1>
-            <p style="color: #64748b; font-size: 1.1rem; margin-top: 0;">Radar Informativo Global por Continentes</p>
+            <h1>EL DOCTOR NEWS HUB</h1>
+            <p>Radar Informativo Global por Continentes</p>
         </header>
         
         <div style="text-align: center;">
@@ -68,38 +92,57 @@
         }
         
         function render(data) {
-            if (data.length === 0) {
+            if (!data || data.length === 0) {
                 document.getElementById('news-container').innerHTML = '<p style="text-align:center; grid-column: 1 / -1; color: #64748b; font-size: 1.1rem;">No se encontraron noticias para esta categoría o búsqueda.</p>';
                 return;
             }
-            document.getElementById('news-container').innerHTML = data.map(n => `
-                <div class="card">
-                    ${n.image_url ? `<img src="${n.image_url}" onerror="this.style.display='none'">` : ''}
-                    <small>${n.category} • ${n.name}</small>
-                    <h3>${n.title}</h3>
-                    <div class="link-container">
-                        <a href="${n.link}" target="_blank">Leer completa →</a>
+            document.getElementById('news-container').innerHTML = data.map(n => {
+                const displayCat = n.category || n.cat || 'General';
+                return `
+                    <div class="card">
+                        ${n.image_url ? `<img src="${n.image_url}" onerror="this.style.display='none'">` : ''}
+                        <small>${displayCat} • ${n.name || 'Agencia'}</small>
+                        <h3>${n.title}</h3>
+                        <div class="link-container">
+                            <a href="${n.link}" target="_blank">Leer completa →</a>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
         
         function filter(cat) {
-            // Manejar la clase active de los botones
             document.querySelectorAll('button').forEach(b => {
                 const btnText = b.innerText.trim();
-                const isMatch = btnText === cat || (cat === 'Tech' && btnText === 'Tecnología');
-                b.classList.toggle('active', isMatch);
+                b.classList.toggle('active', btnText === cat || (cat === 'Tech' && btnText === 'Tecnología'));
             });
             
-            // Filtrar los datos
-            const filteredData = cat === 'Todas' ? allNews : allNews.filter(n => n.category === cat);
+            if (cat === 'Todas') {
+                render(allNews);
+                return;
+            }
+            
+            // Filtro inteligente inmune a tildes, mayúsculas y variaciones cat/category
+            const filteredData = allNews.filter(n => {
+                const itemCat = (n.category || n.cat || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+                let targetCat = cat.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+                
+                if (targetCat === 'tecnologia' || targetCat === 'tech') {
+                    return itemCat === 'tecnologia' || itemCat === 'tech';
+                }
+                
+                return itemCat === targetCat;
+            });
+            
             render(filteredData);
         }
         
         document.getElementById('search-bar').addEventListener('input', e => {
             const t = e.target.value.toLowerCase();
-            render(allNews.filter(n => n.title.toLowerCase().includes(t) || n.name.toLowerCase().includes(t)));
+            render(allNews.filter(n => 
+                (n.title && n.title.toLowerCase().includes(t)) || 
+                (n.name && n.name.toLowerCase().includes(t))
+            ));
         });
         
         load();
