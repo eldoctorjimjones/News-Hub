@@ -11,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-app.use(express.json()); 
+app.use(express.json());
 
 const customParser = new Parser({ 
     timeout: 10000,
@@ -22,60 +22,68 @@ const client = new Client({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }
 });
-client.connect();
+
+async function connectDB() {
+    try {
+        await client.connect();
+        console.log("✅ Conectado a Postgres");
+    } catch (e) {
+        console.error("❌ Error BD, reintentando...", e);
+        setTimeout(connectDB, 5000);
+    }
+}
+connectDB();
 
 async function updateNews() {
-    console.log("🔄 Sincronizando noticias RSS...");
+    console.log("🔄 Iniciando ciclo de noticias...");
+    
+    // 1. Borrar noticias antiguas (excepto Horny Report)
     try {
-        const rawData = fs.readFileSync(path.join(__dirname, 'feeds.json'), 'utf8');
-        const { feeds } = JSON.parse(rawData);
-        let allResults = [];
+        await client.query("DELETE FROM news WHERE category != 'Horny Report'");
+    } catch (e) { console.error("Error limpiando:", e); return; }
 
-        for (const feed of feeds) {
-            try {
-                await wait(600); 
-                const data = await customParser.parseURL(feed.url);
-                const items = data.items.slice(0, 3).map(item => [feed.cat, feed.name, item.title, item.link, null]);
-                allResults.push(...items);
-            } catch (e) { console.log(`❌ Error ${feed.name}: ${e.message}`); }
-        }
+    // 2. Leer fuentes
+    const rawData = fs.readFileSync(path.join(__dirname, 'feeds.json'), 'utf8');
+    const { feeds } = JSON.parse(rawData);
 
-        if (allResults.length > 0) {
-            await client.query('BEGIN');
-            // Mantenemos los 'Horny Report' intactos
-            await client.query("DELETE FROM news WHERE category != 'Horny Report'");
+    // 3. Procesar uno por uno con pausas
+    for (const feed of feeds) {
+        try {
+            console.log(`📡 Procesando: ${feed.name}`);
+            const data = await customParser.parseURL(feed.url);
+            const items = data.items.slice(0, 3);
             
-            for (const row of allResults) {
-                await client.query('INSERT INTO news (category, name, title, link, image_url) VALUES ($1, $2, $3, $4, $5)', row);
+            for (const item of items) {
+                await client.query(
+                    'INSERT INTO news (category, name, title, link, image_url) VALUES ($1, $2, $3, $4, $5)',
+                    [feed.cat, feed.name, item.title, item.link, null]
+                );
             }
-            await client.query('COMMIT');
-            console.log(`✅ ${allResults.length} artículos RSS actualizados.`);
+            await wait(3000); // Pausa de 3 segundos entre webs
+        } catch (e) { 
+            console.log(`⚠️ Saltando ${feed.name}: ${e.message}`); 
         }
-    } catch (e) { console.error("Error BD:", e); }
+    }
+    console.log("✅ Ciclo de noticias finalizado.");
 }
 
-// RUTA ADMIN: Para inyectar tus programas
+// RUTA ADMIN
 app.post('/api/news/bulk', async (req, res) => {
     const { news } = req.body;
     const authHeader = req.headers['authorization'];
-    const CLAVE_SECRETA = "MiClaveUltraSecreta123"; 
-    
-    if (!authHeader || authHeader !== `Bearer ${CLAVE_SECRETA}`) {
+    if (!authHeader || authHeader !== `Bearer MiClaveUltraSecreta123`) {
         return res.status(401).json({ message: "Acceso denegado." });
     }
 
     try {
-        await client.query('BEGIN');
         for (const item of news) {
             await client.query(
                 'INSERT INTO news (category, name, title, link, image_url) VALUES ($1, $2, $3, $4, $5)',
                 [item.category, item.name, item.title, item.link, null]
             );
         }
-        await client.query('COMMIT');
         res.status(200).json({ success: true, message: "Inyección exitosa." });
     } catch (error) {
-        await client.query('ROLLBACK');
         res.status(500).json({ message: "Error al guardar." });
     }
 });
@@ -92,6 +100,8 @@ app.use(express.static('.'));
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`🌍 Servidor activo en puerto ${PORT}`);
+    // Ejecutar inmediatamente al arrancar
     updateNews();
-    setInterval(updateNews, 1800000); 
+    // Ejecutar cada 2 horas (evita saturación)
+    setInterval(updateNews, 7200000); 
 });
