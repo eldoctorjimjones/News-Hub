@@ -1,112 +1,32 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Doctor News Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Stalinist+One&display=swap" rel="stylesheet">
-    <style>
-        :root { --primary: #dc2626; --bg: #f8fafc; --text: #1e293b; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { font-family: 'Stalinist One', cursive; font-size: 2.8rem; color: var(--primary); margin-bottom: 5px; text-shadow: 2px 2px 0px #0f172a; }
-        header p { color: #64748b; font-size: 1.1rem; margin-top: 5px; font-weight: 600; text-transform: uppercase; }
-        #search-bar { width: 100%; max-width: 600px; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; font-size: 1rem; }
-        nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
-        button { padding: 10px 20px; border: none; border-radius: 25px; cursor: pointer; background: #e2e8f0; font-weight: 600; transition: all 0.2s; color: var(--text); }
-        button:hover { background: #cbd5e1; transform: translateY(-2px); }
-        button.active { background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3); }
-        #news-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-        .card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
-        .card h3 { font-size: 1.15rem; line-height: 1.5; margin: 0 0 12px 0; color: #0f172a; }
-        .card small { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; padding: 4px 10px; background: #fee2e2; border-radius: 6px; margin-bottom: 15px; color: var(--primary); width: fit-content; }
-        .card .link-container { margin-top: auto; padding-top: 15px; border-top: 1px solid #f1f5f9; }
-        .card a { color: var(--primary); font-weight: 600; text-decoration: none; }
-        .card a:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>EL DOCTOR NEWS HUB</h1>
-            <p>Radar Informativo Global por Continentes</p>
-        </header>
+<script>
+    function render(data) {
+        const container = document.getElementById('news-container');
+        const isHornyView = document.querySelector('button.active').innerText.includes('Horny Report');
         
-        <div style="text-align: center;">
-            <input type="text" id="search-bar" placeholder="🔍 Buscar noticias...">
-        </div>
-        
-        <nav id="filters">
-            <button class="active" onclick="filter('Todas')">Todas</button>
-            <button onclick="filter('América')">América</button>
-            <button onclick="filter('Europa')">Europa</button>
-            <button onclick="filter('Asia')">Asia</button>
-            <button onclick="filter('África')">África</button>
-            <button onclick="filter('Tech')">Tecnología</button>
-            <button onclick="filter('Horny Report')">Horny Report 🎙️</button>
-        </nav>
-        
-        <div id="news-container"></div>
-    </div>
+        if (isHornyView) {
+            const grupos = data.reduce((acc, item) => {
+                if (item.category === 'Horny Report') {
+                    if (!acc[item.name]) acc[item.name] = [];
+                    acc[item.name].push(item);
+                }
+                return acc;
+            }, {});
 
-    <script>
-        let allNews = [];
-        
-        async function load() {
-            document.getElementById('news-container').innerHTML = '<h3 style="text-align:center; width:100%;">📡 Cargando satélites...</h3>';
-            try {
-                const res = await fetch('/api/news');
-                allNews = await res.json();
-                render(allNews);
-            } catch (err) {
-                document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">Error al conectar con la base de datos.</p>';
-            }
-        }
-        
-        function render(data) {
-            if (!data || data.length === 0) {
-                document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">No hay noticias en esta categoría.</p>';
-                return;
-            }
-            document.getElementById('news-container').innerHTML = data.map(n => {
-                const displayCat = n.category || 'General';
-                return `
-                    <div class="card">
-                        <small>${displayCat} • ${n.name || 'Agencia'}</small>
-                        <h3>${n.title}</h3>
-                        <div class="link-container"><a href="${n.link}" target="_blank">Revisar enlace →</a></div>
+            container.innerHTML = Object.keys(grupos).map(nombreProg => `
+                <details open style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                    <summary style="cursor: pointer; font-weight: 800; font-size: 1.4rem; color: #dc2626; padding-bottom: 10px;">${nombreProg}</summary>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 10px;">
+                        ${grupos[nombreProg].map(n => `
+                            <div style="border: 1px solid #f1f5f9; border-radius: 12px; padding: 10px; display: flex; flex-direction: column;">
+                                ${n.image_url ? `<img src="${n.image_url}" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">` : ''}
+                                <a href="${n.link}" target="_blank" style="text-decoration: none; color: #1e293b; font-weight: 600; font-size: 0.9rem;">${n.title}</a>
+                            </div>
+                        `).join('')}
                     </div>
-                `;
-            }).join('');
+                </details>
+            `).join('');
+        } else {
+            // ... (resto de tu vista normal)
         }
-        
-        function filter(cat) {
-            document.querySelectorAll('button').forEach(b => {
-                const btnText = b.innerText.replace(' 🎙️', '').trim();
-                b.classList.toggle('active', btnText === cat || (cat === 'Tech' && btnText === 'Tecnología'));
-            });
-            
-            if (cat === 'Todas') { render(allNews); return; }
-            
-            const filteredData = allNews.filter(n => {
-                const itemCat = (n.category || '').toLowerCase().trim();
-                const targetCat = cat.toLowerCase().trim();
-                return itemCat === targetCat;
-            });
-            
-            render(filteredData);
-        }
-        
-        document.getElementById('search-bar').addEventListener('input', e => {
-            const t = e.target.value.toLowerCase();
-            render(allNews.filter(n => 
-                (n.title && n.title.toLowerCase().includes(t)) || 
-                (n.category && n.category.toLowerCase().includes(t))
-            ));
-        });
-        
-        load();
-    </script>
-</body>
-</html>
+    }
+</script>
