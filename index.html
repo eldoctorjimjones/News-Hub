@@ -2,61 +2,68 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Doctor News Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Doctor News Hub</title>
     <style>
-        body { font-family: sans-serif; background: #f0f2f5; padding: 20px; }
-        .nav { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
-        button { padding: 10px; cursor: pointer; }
-        .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .error { color: red; text-align: center; }
+        body { font-family: sans-serif; background: #f8fafc; margin: 0; padding: 20px; }
+        #news-container { max-width: 1000px; margin: 20px auto; }
+        .nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
+        button { padding: 10px 20px; cursor: pointer; border: none; border-radius: 20px; background: #e2e8f0; }
+        button.active { background: #dc2626; color: white; }
+        .card { background: white; padding: 20px; margin-bottom: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
-    <div class="nav">
-        <button onclick="render('Todas')">Todas</button>
-        <button onclick="render('Horny Report')">Horny Report 🎙️</button>
+    <div class="nav" id="filters">
+        <button class="active" onclick="filter('Todas', this)">Todas</button>
+        <button onclick="filter('Horny Report', this)">Horny Report 🎙️</button>
     </div>
 
-    <div id="container">Cargando noticias...</div>
+    <div id="news-container">Cargando...</div>
 
     <script>
-        let globalNews = [];
+        let allNews = [];
 
-        async function init() {
+        async function loadNews() {
             try {
-                const response = await fetch('/api/news');
-                if (!response.ok) throw new Error('Error al conectar con la API');
-                globalNews = await response.json();
-                render('Todas');
-            } catch (err) {
-                document.getElementById('container').innerHTML = `<p class="error">Error: ${err.message}</p>`;
+                const res = await fetch('/api/news');
+                if (!res.ok) throw new Error('Servidor responde error');
+                allNews = await res.json();
+                render(allNews);
+            } catch (e) {
+                document.getElementById('news-container').innerHTML = "Error cargando datos. Revisa la consola.";
+                console.error(e);
             }
         }
 
-        function render(categoria) {
-            const container = document.getElementById('container');
-            let data = globalNews;
-
-            if (categoria !== 'Todas') {
-                data = globalNews.filter(n => n.category === categoria);
-            }
-
-            if (data.length === 0) {
-                container.innerHTML = '<p style="text-align:center;">No hay noticias disponibles.</p>';
+        function render(data) {
+            const container = document.getElementById('news-container');
+            if (!data || data.length === 0) {
+                container.innerHTML = "No hay noticias disponibles.";
                 return;
             }
-
             container.innerHTML = data.map(n => `
                 <div class="card">
-                    <strong>[${n.category || 'General'}]</strong> ${n.title}
-                    <br><a href="${n.link}" target="_blank">Leer más</a>
+                    <small style="color:red">${n.category || 'General'}</small>
+                    <h3>${n.title || 'Sin título'}</h3>
+                    <a href="${n.link || '#'}" target="_blank">Revisar enlace</a>
                 </div>
             `).join('');
         }
 
-        // Llamada inicial
-        init();
+        function filter(cat, btn) {
+            document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            if (cat === 'Todas') {
+                render(allNews);
+            } else {
+                render(allNews.filter(n => n.category === cat));
+            }
+        }
+
+        loadNews();
     </script>
 </body>
 </html>
