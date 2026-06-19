@@ -3,54 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global News Hub</title>
+    <title>Global News Hub | Inteligencia Informativa</title>
     <style>
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f2f5; padding: 20px; color: #1a1a1a; margin: 0; }
-        header { text-align: center; margin-bottom: 30px; }
+        :root {
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --accent: #3b82f6;
+            --gray: #64748b;
+        }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
         
-        /* Grid inteligente: se adapta al tamaño de pantalla */
+        /* Header Profesional */
+        header { max-width: 1200px; margin: 0 auto 40px auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text); letter-spacing: -1px; }
+        
+        /* Grid Moderno */
         #news-container { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 24px; 
+            max-width: 1200px; margin: 0 auto; 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; 
         }
 
+        /* Tarjeta Estilizada */
         .card { 
-            background: white; 
-            border-radius: 16px; 
-            overflow: hidden; 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--card-bg); border-radius: 12px; overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            transition: all 0.3s ease; display: flex; flex-direction: column;
         }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .img-wrapper { height: 200px; overflow: hidden; background: #e2e8f0; }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .card:hover img { transform: scale(1.05); }
 
-        .card img { width: 100%; height: 190px; object-fit: cover; background: #e5e7eb; }
+        .content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .meta { font-size: 0.75rem; font-weight: 600; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; display: block; }
+        h3 { font-size: 1.25rem; line-height: 1.4; margin: 0 0 15px 0; color: var(--text); }
+        .read-more { margin-top: auto; color: var(--accent); font-weight: 600; font-size: 0.85rem; text-decoration: none; }
         
-        .content { padding: 20px; }
-        .badge { 
-            display: inline-block; padding: 4px 12px; border-radius: 6px; 
-            font-size: 0.70em; font-weight: 700; text-transform: uppercase;
-            background: #eef2ff; color: #4338ca; margin-bottom: 12px; letter-spacing: 0.5px;
-        }
-        
-        h3 { margin: 0 0 15px 0; font-size: 1.15em; line-height: 1.5; height: 3.6em; overflow: hidden; }
-        
-        .link-container { margin-top: 15px; border-top: 1px solid #f3f4f6; padding-top: 15px; }
-        a { color: #4338ca; text-decoration: none; font-weight: 600; font-size: 0.9em; }
-        a:hover { text-decoration: underline; }
-        
-        .loading { text-align: center; font-size: 1.2em; color: #666; }
+        /* Skeleton Loader (Animación de carga profesional) */
+        .skeleton { animation: pulse 1.5s infinite; background: #e2e8f0; border-radius: 4px; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Global News Hub</h1>
+        <div class="logo">GLOBAL NEWS HUB</div>
+        <div id="status">Sincronizado</div>
     </header>
 
-    <div id="news-container"><p class="loading">Cargando noticias de última hora...</p></div>
+    <main id="news-container">
+        <!-- Generaremos 6 tarjetas de carga mientras llega la data -->
+        <div class="card"><div class="img-wrapper skeleton"></div><div class="content"><div class="skeleton" style="height:20px; width:60%; margin-bottom:10px;"></div><div class="skeleton" style="height:40px; width:100%;"></div></div></div>
+        <div class="card"><div class="img-wrapper skeleton"></div><div class="content"><div class="skeleton" style="height:20px; width:60%; margin-bottom:10px;"></div><div class="skeleton" style="height:40px; width:100%;"></div></div></div>
+        <div class="card"><div class="img-wrapper skeleton"></div><div class="content"><div class="skeleton" style="height:20px; width:60%; margin-bottom:10px;"></div><div class="skeleton" style="height:40px; width:100%;"></div></div></div>
+    </main>
 
     <script>
         async function fetchNews() {
@@ -60,22 +67,22 @@
                 const data = await res.json();
                 
                 container.innerHTML = data.map(item => `
-                    <div class="card">
-                        ${item.image_url ? `<img src="${item.image_url}" alt="${item.title}" onerror="this.style.display='none'">` : ''}
-                        <div class="content">
-                            <span class="badge">${item.category} • ${item.name}</span>
-                            <h3>${item.title}</h3>
-                            <div class="link-container">
-                                <a href="${item.link}" target="_blank">Leer completa →</a>
-                            </div>
+                    <article class="card">
+                        <div class="img-wrapper">
+                            ${item.image_url ? `<img src="${item.image_url}" alt="Noticia" onerror="this.parentElement.style.display='none'">` : ''}
                         </div>
-                    </div>
+                        <div class="content">
+                            <span class="meta">${item.category} • ${item.name}</span>
+                            <h3>${item.title}</h3>
+                            <a href="${item.link}" target="_blank" class="read-more">Leer noticia completa →</a>
+                        </div>
+                    </article>
                 `).join('');
             } catch (err) { 
-                container.innerHTML = '<p class="loading">No se pudieron cargar las noticias. Intenta de nuevo más tarde.</p>'; 
+                container.innerHTML = '<h2 style="text-align:center; width:100%">Temporalmente fuera de servicio.</h2>'; 
             }
         }
-        fetchNews();
+        window.onload = fetchNews;
     </script>
 </body>
 </html>
