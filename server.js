@@ -9,9 +9,14 @@ import 'dotenv/config';
 const { Client } = pg;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-const parser = new Parser({ 
-    timeout: 10000, 
-    headers: { 'User-Agent': 'Mozilla/5.0' } 
+
+// Configuración del parser con headers de navegador real
+const customParser = new Parser({ 
+    timeout: 15000, 
+    headers: { 
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Accept': 'application/xml, text/xml, application/rss+xml, application/atom+xml'
+    } 
 });
 
 const client = new Client({
@@ -30,14 +35,24 @@ async function updateNews() {
 
         for (const feed of feeds) {
             try {
-                const data = await parser.parseURL(feed.url);
-                // Extraemos imagen si existe (o enclosure o media:content)
+                const data = await customParser.parseURL(feed.url);
+                // Extraemos información de manera más segura
                 const items = data.items.slice(0, 3).map(item => {
-                    const img = item.enclosure?.url || item.image?.url || null;
+                    const img = item.enclosure?.url || 
+                                item.image?.url || 
+                                item.media?.content?.$.url || 
+                                item['media:content']?.$?.url || null;
                     return [feed.cat, feed.name, item.title, item.link, img];
                 });
                 allResults.push(...items);
-            } catch (e) { console.log(`❌ Error ${feed.name}: ${e.message}`); }
+            } catch (e) { 
+                console.log(`❌ Error ${feed.name}: ${e.message}`); 
+            }
+        }
+
+        if (allResults.length === 0) {
+            console.log("⚠️ No se obtuvieron artículos, manteniendo los datos actuales.");
+            return;
         }
 
         await client.query('BEGIN');
@@ -50,7 +65,7 @@ async function updateNews() {
         console.log(`✅ ${allResults.length} artículos actualizados con imágenes.`);
     } catch (e) {
         await client.query('ROLLBACK');
-        console.error("Error BD:", e);
+        console.error("Error BD:", e.message);
     }
 }
 
@@ -58,7 +73,9 @@ app.get('/api/news', async (req, res) => {
     try {
         const result = await client.query('SELECT * FROM news');
         res.json(result.rows);
-    } catch (e) { res.status(500).send(e.message); }
+    } catch (e) { 
+        res.status(500).send(e.message); 
+    }
 });
 
 app.use(express.static('.'));

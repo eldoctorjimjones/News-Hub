@@ -5,19 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global News Hub</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #f4f4f9; padding: 20px; color: #333; }
-        #news-container { max-width: 800px; margin: 0 auto; display: grid; gap: 20px; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .card img { width: 100%; height: 180px; object-fit: cover; display: block; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f2f5; padding: 20px; color: #1a1a1a; margin: 0; }
+        header { text-align: center; margin-bottom: 30px; }
+        
+        /* Grid inteligente: se adapta al tamaño de pantalla */
+        #news-container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 24px; 
+        }
+
+        .card { 
+            background: white; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+
+        .card img { width: 100%; height: 190px; object-fit: cover; background: #e5e7eb; }
+        
         .content { padding: 20px; }
-        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75em; background: #e0e7ff; color: #4338ca; margin-bottom: 10px; }
-        h3 { margin: 0 0 10px 0; font-size: 1.25em; line-height: 1.4; }
-        a { color: #4338ca; text-decoration: none; font-weight: bold; }
+        .badge { 
+            display: inline-block; padding: 4px 12px; border-radius: 6px; 
+            font-size: 0.70em; font-weight: 700; text-transform: uppercase;
+            background: #eef2ff; color: #4338ca; margin-bottom: 12px; letter-spacing: 0.5px;
+        }
+        
+        h3 { margin: 0 0 15px 0; font-size: 1.15em; line-height: 1.5; height: 3.6em; overflow: hidden; }
+        
+        .link-container { margin-top: 15px; border-top: 1px solid #f3f4f6; padding-top: 15px; }
+        a { color: #4338ca; text-decoration: none; font-weight: 600; font-size: 0.9em; }
+        a:hover { text-decoration: underline; }
+        
+        .loading { text-align: center; font-size: 1.2em; color: #666; }
     </style>
 </head>
 <body>
 
-    <div id="news-container"></div>
+    <header>
+        <h1>Global News Hub</h1>
+    </header>
+
+    <div id="news-container"><p class="loading">Cargando noticias de última hora...</p></div>
 
     <script>
         async function fetchNews() {
@@ -25,17 +58,22 @@
             try {
                 const res = await fetch('/api/news');
                 const data = await res.json();
+                
                 container.innerHTML = data.map(item => `
                     <div class="card">
-                        ${item.image_url ? `<img src="${item.image_url}" alt="Noticia">` : ''}
+                        ${item.image_url ? `<img src="${item.image_url}" alt="${item.title}" onerror="this.style.display='none'">` : ''}
                         <div class="content">
                             <span class="badge">${item.category} • ${item.name}</span>
                             <h3>${item.title}</h3>
-                            <a href="${item.link}" target="_blank">Leer completa →</a>
+                            <div class="link-container">
+                                <a href="${item.link}" target="_blank">Leer completa →</a>
+                            </div>
                         </div>
                     </div>
                 `).join('');
-            } catch (err) { container.innerHTML = '<p>Error al cargar.</p>'; }
+            } catch (err) { 
+                container.innerHTML = '<p class="loading">No se pudieron cargar las noticias. Intenta de nuevo más tarde.</p>'; 
+            }
         }
         fetchNews();
     </script>
