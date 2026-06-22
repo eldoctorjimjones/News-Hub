@@ -45,31 +45,47 @@
             <input type="text" id="search-bar" placeholder="🔍 Buscar noticias...">
         </div>
         
-        <nav id="filters">
-            <button class="active" onclick="filter('Todas')">Todas</button>
-            <button onclick="filter('América')">América</button>
-            <button onclick="filter('Europa')">Europa</button>
-            <button onclick="filter('Asia')">Asia</button>
-            <button onclick="filter('África')">África</button>
-            <button onclick="filter('Tech')">Tecnología</button>
-        </nav>
-        
+        <<nav id="filters">
+    <button class="active" onclick="filter('Todas')">Todas</button>
+    <button onclick="filter('América')">América</button>
+    <button onclick="filter('Europa')">Europa</button>
+    <button onclick="filter('Asia')">Asia</button>
+    <button onclick="filter('África')">África</button>
+    <button onclick="filter('Tech')">Tecnología</button>
+    <!-- Aquí aparecerán los desplegables de Horny Report -->
+    <select id="horny-dropdown" onchange="filter(this.value)">
+        <option value="">Horny Report 🎙️</option>
+    </select>
+</nav>
         <div id="news-container"></div>
     </div>
 
     <script>
         let allNews = [];
         
-        async function load() {
-            document.getElementById('news-container').innerHTML = '<h3 style="text-align:center; width:100%;">📡 Cargando satélites...</h3>';
-            try {
-                const res = await fetch('/api/news');
-                allNews = await res.json();
-                render(allNews);
-            } catch (err) {
-                document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">Error al conectar con la base de datos.</p>';
-            }
-        }
+       // Añade esto al final de tu función 'load()' después de cargar los datos:
+async function load() {
+    // ... tu código de carga existente ...
+    allNews = await res.json();
+    render(allNews);
+    generateHornyMenu(allNews); // <--- NUEVA LÍNEA
+}
+
+function generateHornyMenu(data) {
+    const select = document.getElementById('horny-dropdown');
+    // Buscamos categorías que empiecen por "Horny Report"
+    const programs = [...new Set(data
+        .map(n => n.category)
+        .filter(c => c && c.startsWith('Horny Report'))
+    )].sort().reverse();
+
+    programs.forEach(prog => {
+        const opt = document.createElement('option');
+        opt.value = prog;
+        opt.innerText = prog;
+        select.appendChild(opt);
+    });
+}
         
     function render(data) {
         if (!data || data.length === 0) {
@@ -93,21 +109,25 @@
 } 
         
         function filter(cat) {
-            document.querySelectorAll('button').forEach(b => {
-                const btnText = b.innerText.trim();
-                b.classList.toggle('active', btnText === cat || (cat === 'Tech' && btnText === 'Tecnología'));
-            });
-            
-            if (cat === 'Todas') { render(allNews); return; }
-            
-            const filteredData = allNews.filter(n => {
-                const itemCat = (n.category || '').toLowerCase().trim();
-                const targetCat = cat.toLowerCase().trim();
-                return itemCat === targetCat;
-            });
-            
-            render(filteredData);
-        }
+    if (!cat) return; // Si es el texto "Horny Report 🎙️", no hacemos nada
+    
+    // UI Update botones
+    document.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('active', b.innerText.trim() === cat);
+    });
+
+    if (cat === 'Todas') { render(allNews); return; }
+    
+    // Filtrado inteligente
+    const filteredData = allNews.filter(n => {
+        const itemCat = (n.category || '').toLowerCase().trim();
+        const targetCat = cat.toLowerCase().trim();
+        // Usamos .includes para que "Horny Report 433" coincida al buscar
+        return itemCat.includes(targetCat);
+    });
+    
+    render(filteredData);
+}
         
         document.getElementById('search-bar').addEventListener('input', e => {
             const t = e.target.value.toLowerCase();
