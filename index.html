@@ -13,10 +13,10 @@
         header h1 { font-family: 'Stalinist One', cursive; font-size: 2.8rem; color: var(--primary); margin-bottom: 5px; text-shadow: 2px 2px 0px #0f172a; }
         header p { color: #64748b; font-size: 1.1rem; margin-top: 5px; font-weight: 600; text-transform: uppercase; }
         #search-bar { width: 100%; max-width: 600px; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; font-size: 1rem; }
-        nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
-        button { padding: 10px 20px; border: none; border-radius: 25px; cursor: pointer; background: #e2e8f0; font-weight: 600; transition: all 0.2s; color: var(--text); }
-        button:hover { background: #cbd5e1; transform: translateY(-2px); }
-        button.active { background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3); }
+        nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; align-items: center; }
+        button, select { padding: 10px 20px; border: none; border-radius: 25px; cursor: pointer; background: #e2e8f0; font-weight: 600; transition: all 0.2s; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; }
+        button:hover, select:hover { background: #cbd5e1; transform: translateY(-2px); }
+        button.active, select.active { background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3); }
         #news-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
         .card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
         .card h3 { font-size: 1.15rem; line-height: 1.5; margin: 0 0 12px 0; color: #0f172a; }
@@ -24,14 +24,7 @@
         .card .link-container { margin-top: auto; padding-top: 15px; border-top: 1px solid #f1f5f9; }
         .card a { color: var(--primary); font-weight: 600; text-decoration: none; }
         .card a:hover { text-decoration: underline; }
-        .card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    display: block;
-}
+        .card img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; display: block; }
     </style>
 </head>
 <body>
@@ -45,89 +38,116 @@
             <input type="text" id="search-bar" placeholder="🔍 Buscar noticias...">
         </div>
         
-        <<nav id="filters">
-    <button class="active" onclick="filter('Todas')">Todas</button>
-    <button onclick="filter('América')">América</button>
-    <button onclick="filter('Europa')">Europa</button>
-    <button onclick="filter('Asia')">Asia</button>
-    <button onclick="filter('África')">África</button>
-    <button onclick="filter('Tech')">Tecnología</button>
-    <!-- Aquí aparecerán los desplegables de Horny Report -->
-    <select id="horny-dropdown" onchange="filter(this.value)">
-        <option value="">Horny Report 🎙️</option>
-    </select>
-</nav>
+        <nav id="filters">
+            <button class="active" onclick="filter('Todas')">Todas</button>
+            <button onclick="filter('América')">América</button>
+            <button onclick="filter('Europa')">Europa</button>
+            <button onclick="filter('Asia')">Asia</button>
+            <button onclick="filter('África')">África</button>
+            <button onclick="filter('Tech')">Tecnología</button>
+            
+            <!-- NUEVO: Desplegable automático para los programas de Horny Report -->
+            <select id="horny-dropdown" onchange="filter(this.value)">
+                <option value="">Horny Report 🎙️</option>
+            </select>
+        </nav>
+        
         <div id="news-container"></div>
     </div>
 
     <script>
         let allNews = [];
         
-       // Añade esto al final de tu función 'load()' después de cargar los datos:
-async function load() {
-    // ... tu código de carga existente ...
-    allNews = await res.json();
-    render(allNews);
-    generateHornyMenu(allNews); // <--- NUEVA LÍNEA
-}
-
-function generateHornyMenu(data) {
-    const select = document.getElementById('horny-dropdown');
-    // Buscamos categorías que empiecen por "Horny Report"
-    const programs = [...new Set(data
-        .map(n => n.category)
-        .filter(c => c && c.startsWith('Horny Report'))
-    )].sort().reverse();
-
-    programs.forEach(prog => {
-        const opt = document.createElement('option');
-        opt.value = prog;
-        opt.innerText = prog;
-        select.appendChild(opt);
-    });
-}
-        
-    function render(data) {
-        if (!data || data.length === 0) {
-        document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">No hay noticias en esta categoría.</p>';
-        return;
+        async function load() {
+            document.getElementById('news-container').innerHTML = '<h3 style="text-align:center; width:100%;">📡 Cargando satélites...</h3>';
+            try {
+                // NOTA: Si sigue sin salir nada, verifica si tu ruta en server.js es '/api/news' o solo '/news'
+                const res = await fetch('/api/news');
+                allNews = await res.json();
+                render(allNews);
+                generateHornyMenu(allNews); // Genera el desplegable con los programas que encuentre
+            } catch (err) {
+                document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">Error al conectar con la base de datos.</p>';
+            }
         }
-        document.getElementById('news-container').innerHTML = data.map(n => {
-        const displayCat = n.category || 'General';
-        // AÑADE ESTA LÍNEA AQUÍ: Crea el HTML de la imagen solo si existe
-        const imgHTML = n.image_url ? `<img src="${n.image_url}" alt="Noticia">` : '';
         
-        return `
-            <div class="card">
-                ${imgHTML} <!-- INSERTAMOS LA IMAGEN AQUÍ -->
-                <small>${displayCat} • ${n.name || 'Agencia'}</small>
-                <h3>${n.title}</h3>
-                <div class="link-container"><a href="${n.link}" target="_blank">Revisar enlace →</a></div>
-            </div>
-        `;
-    }).join('');
-} 
+        function render(data) {
+            if (!data || data.length === 0) {
+                document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">No hay noticias en esta categoría.</p>';
+                return;
+            }
+            document.getElementById('news-container').innerHTML = data.map(n => {
+                const displayCat = n.category || 'General';
+                const imgHTML = n.image_url ? `<img src="${n.image_url}" alt="Noticia">` : '';
+                
+                return `
+                    <div class="card">
+                        ${imgHTML}
+                        <small>${displayCat} • ${n.name || 'Agencia'}</small>
+                        <h3>${n.title}</h3>
+                        <div class="link-container"><a href="${n.link}" target="_blank">Revisar enlace →</a></div>
+                    </div>
+                `;
+            }).join('');
+        } 
+
+        function generateHornyMenu(data) {
+            const select = document.getElementById('horny-dropdown');
+            select.innerHTML = '<option value="">Horny Report 🎙️</option>'; // Resetear
+            
+            // Filtra categorías únicas que empiecen por "Horny Report"
+            const programs = [...new Set(data
+                .map(n => n.category)
+                .filter(c => c && c.startsWith('Horny Report'))
+            )].sort((a, b) => b.localeCompare(a)); // Ordena de mayor a menor (Ej: 433, 432...)
+
+            programs.forEach(prog => {
+                const opt = document.createElement('option');
+                opt.value = prog;
+                opt.innerText = prog;
+                select.appendChild(opt);
+            });
+        }
         
         function filter(cat) {
-    if (!cat) return; // Si es el texto "Horny Report 🎙️", no hacemos nada
-    
-    // UI Update botones
-    document.querySelectorAll('button').forEach(b => {
-        b.classList.toggle('active', b.innerText.trim() === cat);
-    });
+            const dropdown = document.getElementById('horny-dropdown');
 
-    if (cat === 'Todas') { render(allNews); return; }
-    
-    // Filtrado inteligente
-    const filteredData = allNews.filter(n => {
-        const itemCat = (n.category || '').toLowerCase().trim();
-        const targetCat = cat.toLowerCase().trim();
-        // Usamos .includes para que "Horny Report 433" coincida al buscar
-        return itemCat.includes(targetCat);
-    });
-    
-    render(filteredData);
-}
+            // Si el usuario selecciona el título del desplegable, reseteamos a "Todas"
+            if (cat === "") {
+                dropdown.classList.remove('active');
+                filter('Todas');
+                return;
+            }
+            
+            // Gestionar estados activos de los botones normales
+            document.querySelectorAll('button').forEach(b => {
+                const btnText = b.innerText.trim();
+                b.classList.toggle('active', btnText === cat || (cat === 'Tech' && btnText === 'Tecnología'));
+            });
+            
+            // Gestionar estado activo si es un programa de Horny Report
+            if (cat.startsWith('Horny Report')) {
+                dropdown.classList.add('active');
+                document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            } else {
+                dropdown.classList.remove('active');
+                dropdown.value = ""; // Resetea el desplegable visualmente si pulsas otro botón
+            }
+            
+            if (cat === 'Todas') { render(allNews); return; }
+            
+            const filteredData = allNews.filter(n => {
+                const itemCat = (n.category || '').toLowerCase().trim();
+                const targetCat = cat.toLowerCase().trim();
+                
+                if (cat === 'Tech') {
+                    return itemCat === 'tech' || itemCat === 'tecnología';
+                }
+                return itemCat === targetCat;
+            });
+            
+            render(filteredData);
+        }
         
         document.getElementById('search-bar').addEventListener('input', e => {
             const t = e.target.value.toLowerCase();
