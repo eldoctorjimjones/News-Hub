@@ -75,6 +75,8 @@
             
             document.getElementById('news-container').innerHTML = data.map(n => {
                 const displayCat = n.category || 'General';
+                // Pseudocódigo
+const imgHtml = noticia.image_url ? `<img src="${noticia.image_url}" alt="News image">` : '<div class="placeholder"></div>';
                 // Si la imagen está vacía o es una cadena vacía, no la mostramos.
                 // Usamos onerror para ocultar la imagen si el link es inválido (enlace roto).
                 const imgHTML = (n.image_url && n.image_url.trim() !== "" && n.image_url !== "null") 
