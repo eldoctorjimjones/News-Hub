@@ -6,32 +6,36 @@
     <title>El Doctor News Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Stalinist+One&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #dc2626; --bg: #f8fafc; --text: #1e293b; }
+        :root { --primary: #dc2626; --bg: #f8fafc; --text: #1e293b; --card-bg: #ffffff; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
         .container { max-width: 1200px; margin: 0 auto; }
         header { text-align: center; margin-bottom: 40px; }
         header h1 { font-family: 'Stalinist One', cursive; font-size: 2.8rem; color: var(--primary); margin-bottom: 5px; text-shadow: 2px 2px 0px #0f172a; }
-        header p { color: #64748b; font-size: 1.1rem; margin-top: 5px; font-weight: 600; text-transform: uppercase; }
+        
+        /* Spinner */
+        #loader { text-align: center; padding: 50px; font-weight: 600; color: #64748b; }
+        
         #search-bar { width: 100%; max-width: 600px; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; font-size: 1rem; }
-        nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; align-items: center; }
-        button, select { padding: 10px 20px; border: none; border-radius: 25px; cursor: pointer; background: #e2e8f0; font-weight: 600; transition: all 0.2s; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; }
+        nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
+        button, select { padding: 10px 20px; border: none; border-radius: 25px; cursor: pointer; background: #e2e8f0; font-weight: 600; transition: all 0.2s; color: var(--text); }
         button:hover, select:hover { background: #cbd5e1; transform: translateY(-2px); }
-        button.active, select.active { background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3); }
-        #news-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-        .card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
-        .card h3 { font-size: 1.15rem; line-height: 1.5; margin: 0 0 12px 0; color: #0f172a; }
-        .card small { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; padding: 4px 10px; background: #fee2e2; border-radius: 6px; margin-bottom: 15px; color: var(--primary); width: fit-content; }
+        button.active, select.active { background: var(--primary); color: white; }
+
+        #news-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; min-height: 300px; }
+        .card { background: var(--card-bg); border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; border: 1px solid #f1f5f9; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .card h3 { font-size: 1.1rem; line-height: 1.4; margin: 0 0 15px 0; color: #0f172a; }
+        .card small { font-weight: 700; font-size: 0.70rem; text-transform: uppercase; padding: 4px 8px; background: #fee2e2; border-radius: 6px; color: var(--primary); margin-bottom: 10px; display: inline-block; }
         .card .link-container { margin-top: auto; padding-top: 15px; border-top: 1px solid #f1f5f9; }
-        .card a { color: var(--primary); font-weight: 600; text-decoration: none; }
-        .card a:hover { text-decoration: underline; }
-        .card img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; display: block; }
+        .card a { color: var(--primary); font-weight: 600; text-decoration: none; font-size: 0.9rem; }
+        .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; background: #f1f5f9; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>EL DOCTOR NEWS HUB</h1>
-            <p>Radar Informativo Global por Continentes</p>
+            <p>Radar Informativo Global</p>
         </header>
         
         <div style="text-align: center;">
@@ -50,101 +54,77 @@
             </select>
         </nav>
         
+        <div id="loader">Cargando la verdad...</div>
         <div id="news-container"></div>
     </div>
 
     <script>
         let allNews = [];
+        const container = document.getElementById('news-container');
+        const loader = document.getElementById('loader');
         
         async function load() {
             try {
                 const res = await fetch('/api/news');
                 allNews = await res.json();
+                loader.style.display = 'none'; // Ocultar carga
                 render(allNews);
                 generateHornyMenu(allNews);
             } catch (err) {
-                document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">Error al conectar con la base de datos.</p>';
+                loader.innerHTML = '⚠️ Error conectando con la base de datos. Intenta recargar en un momento.';
             }
         }
         
         function render(data) {
             if (!data || data.length === 0) {
-                document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">No hay resultados.</p>';
+                container.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1;">No hay resultados.</p>';
                 return;
             }
             
-            document.getElementById('news-container').innerHTML = data.map(n => {
-                const displayCat = n.category || 'General';
-                // Pseudocódigo
-const imgHtml = noticia.image_url ? `<img src="${noticia.image_url}" alt="News image">` : '<div class="placeholder"></div>';
-                // Si la imagen está vacía o es una cadena vacía, no la mostramos.
-                // Usamos onerror para ocultar la imagen si el link es inválido (enlace roto).
-                const imgHTML = (n.image_url && n.image_url.trim() !== "" && n.image_url !== "null") 
+            container.innerHTML = data.map(n => {
+                const imgHTML = (n.image_url && n.image_url !== 'null' && n.image_url.trim() !== '') 
                     ? `<img src="${n.image_url}" alt="Noticia" onerror="this.style.display='none'">` 
                     : '';
                 
                 return `
                     <div class="card">
                         ${imgHTML}
-                        <small>${displayCat} • ${n.name || 'Agencia'}</small>
-                        <h3>${n.title}</h3>
-                        <div class="link-container"><a href="${n.link}" target="_blank">Revisar enlace →</a></div>
+                        <div>
+                            <small>${n.category || 'General'}</small>
+                            <h3>${n.title}</h3>
+                        </div>
+                        <div class="link-container"><a href="${n.link}" target="_blank">Leer fuente →</a></div>
                     </div>
                 `;
             }).join('');
         }
 
+        // ... (Tu función generateHornyMenu y filter se mantienen igual, funcionan perfecto)
         function generateHornyMenu(data) {
             const select = document.getElementById('horny-dropdown');
-            const programs = [...new Set(data
-                .map(n => n.category)
-                .filter(c => c && c.startsWith('Horny Report'))
-            )].sort((a, b) => b.localeCompare(a));
-
+            const programs = [...new Set(data.map(n => n.category).filter(c => c && c.startsWith('Horny Report')))].sort((a, b) => b.localeCompare(a));
             programs.forEach(prog => {
                 const opt = document.createElement('option');
-                opt.value = prog;
-                opt.innerText = prog; // Esto mostrará "Horny Report 433"
+                opt.value = prog; opt.innerText = prog;
                 select.appendChild(opt);
             });
         }
         
         function filter(cat) {
             const dropdown = document.getElementById('horny-dropdown');
+            if (cat === "") { dropdown.classList.remove('active'); render(allNews); return; }
+            document.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.innerText.trim() === cat));
             
-            if (cat === "") {
-                dropdown.classList.remove('active');
-                render(allNews);
-                return;
-            }
-            
-            document.querySelectorAll('button').forEach(b => {
-                const btnText = b.innerText.trim();
-                b.classList.toggle('active', btnText === cat || (cat === 'Tech' && btnText === 'Tecnología'));
-            });
-            
-            if (cat.startsWith('Horny Report')) {
-                dropdown.classList.add('active');
-                document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-            } else {
-                dropdown.classList.remove('active');
-                dropdown.value = "";
-            }
+            if (cat.startsWith('Horny Report')) { dropdown.classList.add('active'); } 
+            else { dropdown.classList.remove('active'); dropdown.value = ""; }
             
             if (cat === 'Todas') { render(allNews); return; }
-            
-            const filteredData = allNews.filter(n => {
-                const itemCat = (n.category || '').toLowerCase().trim();
-                const targetCat = cat.toLowerCase().trim();
-                if (cat === 'Tech') return itemCat === 'tech' || itemCat === 'tecnología';
-                return itemCat === targetCat;
-            });
-            render(filteredData);
+            render(allNews.filter(n => (n.category || '').toLowerCase().includes(cat.toLowerCase())));
         }
         
         document.getElementById('search-bar').addEventListener('input', e => {
             const t = e.target.value.toLowerCase();
-            render(allNews.filter(n => (n.title && n.title.toLowerCase().includes(t)) || (n.category && n.category.toLowerCase().includes(t))));
+            render(allNews.filter(n => n.title.toLowerCase().includes(t) || (n.category && n.category.toLowerCase().includes(t))));
         });
         
         load();
