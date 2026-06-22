@@ -1,515 +1,80 @@
 {
   "feeds": [
-    {
-      "name": "NYT Americas",
-      "url": "https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml",
-      "cat": "América"
-    },
-    {
-      "name": "CBC News",
-      "url": "https://www.cbc.ca/cmlink/rss-world",
-      "cat": "América"
-    },
-    {
-      "name": "Mercopress",
-      "url": "https://en.mercopress.com/rss/",
-      "cat": "América"
-    },
-    {
-      "name": "Rio Times",
-      "url": "https://www.riotimesonline.com/feed/",
-      "cat": "América"
-    },
-    {
-      "name": "Buenos Aires Times",
-      "url": "https://www.batimes.com.ar/feed",
-      "cat": "América"
-    },
-    {
-      "name": "NPR World",
-      "url": "https://feeds.npr.org/1004/rss.xml",
-      "cat": "América"
-    },
-    {
-      "name": "PBS News",
-      "url": "https://www.pbs.org/newshour/feeds/rss/world",
-      "cat": "América"
-    },
-    {
-      "name": "LA Times",
-      "url": "https://www.latimes.com/world-nation/rss2.0.xml",
-      "cat": "América"
-    },
-    {
-      "name": "Washington Post",
-      "url": "https://feeds.washingtonpost.com/rss/world",
-      "cat": "América"
-    },
-    {
-      "name": "The Globe and Mail",
-      "url": "https://www.theglobeandmail.com/arc/outboundfeeds/rss/category/world/",
-      "cat": "América"
-    },
-    {
-      "name": "National Post",
-      "url": "https://nationalpost.com/category/news/world/feed",
-      "cat": "América"
-    },
-    {
-      "name": "Toronto Sun",
-      "url": "https://torontosun.com/category/news/world/feed",
-      "cat": "América"
-    },
-    {
-      "name": "Tico Times",
-      "url": "https://ticotimes.net/feed",
-      "cat": "América"
-    },
-    {
-      "name": "Havana Times",
-      "url": "https://havanatimes.org/feed/",
-      "cat": "América"
-    },
-    {
-      "name": "Jamaica Observer",
-      "url": "https://www.jamaicaobserver.com/feed/",
-      "cat": "América"
-    },
-    {
-      "name": "Santiago Times",
-      "url": "https://santiagotimes.cl/feed/",
-      "cat": "América"
-    },
-    {
-      "name": "Peru Telegraph",
-      "url": "https://www.perutelegraph.com/news?format=feed&type=rss",
-      "cat": "América"
-    },
-    {
-      "name": "El Universal MX",
-      "url": "https://www.eluniversal.com.mx/rss.xml",
-      "cat": "América"
-    },
-    {
-      "name": "Folha de S.Paulo",
-      "url": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
-      "cat": "América"
-    },
-    {
-      "name": "Clarín Mundo",
-      "url": "https://www.clarin.com/rss/mundo/",
-      "cat": "América"
-    },
-    {
-      "name": "BBC Europe",
-      "url": "https://feeds.bbci.co.uk/news/world/europe/rss.xml",
-      "cat": "Europa"
-    },
-    {
-      "name": "DW Europe",
-      "url": "https://rss.dw.com/rdf/rss-en-eu",
-      "cat": "Europa"
-    },
-    {
-      "name": "France 24",
-      "url": "https://www.france24.com/en/europe/rss",
-      "cat": "Europa"
-    },
-    {
-      "name": "The Guardian",
-      "url": "https://www.theguardian.com/world/europe-news/rss",
-      "cat": "Europa"
-    },
-    {
-      "name": "El País",
-      "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada",
-      "cat": "Europa"
-    },
-    {
-      "name": "Le Monde",
-      "url": "https://www.lemonde.fr/europe/rss_full.xml",
-      "cat": "Europa"
-    },
-    {
-      "name": "Der Spiegel",
-      "url": "https://www.spiegel.de/international/europe/index.rss",
-      "cat": "Europa"
-    },
-    {
-      "name": "Politico EU",
-      "url": "https://www.politico.eu/feed/",
-      "cat": "Europa"
-    },
-    {
-      "name": "Euronews",
-      "url": "https://www.euronews.com/rss?level=theme&name=news",
-      "cat": "Europa"
-    },
-    {
-      "name": "Sky News",
-      "url": "https://feeds.skynews.com/feeds/rss/world.xml",
-      "cat": "Europa"
-    },
-    {
-      "name": "RTE Ireland",
-      "url": "https://www.rte.ie/news/rss/news-headlines.xml",
-      "cat": "Europa"
-    },
-    {
-      "name": "DutchNews",
-      "url": "https://www.dutchnews.nl/feed/",
-      "cat": "Europa"
-    },
-    {
-      "name": "The Local DE",
-      "url": "https://www.thelocal.de/feed",
-      "cat": "Europa"
-    },
-    {
-      "name": "The Local SE",
-      "url": "https://www.thelocal.se/feed",
-      "cat": "Europa"
-    },
-    {
-      "name": "The Local FR",
-      "url": "https://www.thelocal.fr/feed",
-      "cat": "Europa"
-    },
-    {
-      "name": "The Local IT",
-      "url": "https://www.thelocal.it/feed",
-      "cat": "Europa"
-    },
-    {
-      "name": "The Local ES",
-      "url": "https://www.thelocal.es/feed",
-      "cat": "Europa"
-    },
-    {
-      "name": "Swissinfo",
-      "url": "https://www.swissinfo.ch/eng/rss",
-      "cat": "Europa"
-    },
-    {
-      "name": "Helsinki Times",
-      "url": "https://www.helsinkitimes.fi/?format=feed&type=rss",
-      "cat": "Europa"
-    },
-    {
-      "name": "Copenhagen Post",
-      "url": "https://cphpost.dk/feed/",
-      "cat": "Europa"
-    },
-    {
-      "name": "Al Jazeera",
-      "url": "https://www.aljazeera.com/xml/rss/all.xml",
-      "cat": "Asia"
-    },
-    {
-      "name": "SCMP",
-      "url": "https://www.scmp.com/rss/91/feed",
-      "cat": "Asia"
-    },
-    {
-      "name": "Japan Times",
-      "url": "https://www.japantimes.co.jp/feed/",
-      "cat": "Asia"
-    },
-    {
-      "name": "Times of India",
-      "url": "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms",
-      "cat": "Asia"
-    },
-    {
-      "name": "The Hindu",
-      "url": "https://www.thehindu.com/news/international/?service=rss",
-      "cat": "Asia"
-    },
-    {
-      "name": "Straits Times",
-      "url": "https://www.straitstimes.com/news/asia/rss.xml",
-      "cat": "Asia"
-    },
-    {
-      "name": "CNA",
-      "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml",
-      "cat": "Asia"
-    },
-    {
-      "name": "Korea Herald",
-      "url": "https://www.koreaherald.com/common/rss_xml.php?ct=102",
-      "cat": "Asia"
-    },
-    {
-      "name": "Yonhap",
-      "url": "https://en.yna.co.kr/RSS/news.xml",
-      "cat": "Asia"
-    },
-    {
-      "name": "Taipei Times",
-      "url": "https://www.taipeitimes.com/xml/index.rss",
-      "cat": "Asia"
-    },
-    {
-      "name": "Jakarta Post",
-      "url": "https://www.thejakartapost.com/world/rss",
-      "cat": "Asia"
-    },
-    {
-      "name": "Manila Bulletin",
-      "url": "https://mb.com.ph/feed/",
-      "cat": "Asia"
-    },
-    {
-      "name": "Gulf News",
-      "url": "https://gulfnews.com/rss/world",
-      "cat": "Asia"
-    },
-    {
-      "name": "Khaleej Times",
-      "url": "https://www.khaleejtimes.com/rss/world",
-      "cat": "Asia"
-    },
-    {
-      "name": "Arab News",
-      "url": "https://www.arabnews.com/rss.xml",
-      "cat": "Asia"
-    },
-    {
-      "name": "Dawn",
-      "url": "https://www.dawn.com/feeds/home/",
-      "cat": "Asia"
-    },
-    {
-      "name": "NDTV",
-      "url": "https://feeds.feedburner.com/ndtvnews-world-news",
-      "cat": "Asia"
-    },
-    {
-      "name": "Vietnam Express",
-      "url": "https://e.vnexpress.net/rss/world.rss",
-      "cat": "Asia"
-    },
-    {
-      "name": "Malaysiakini",
-      "url": "https://www.malaysiakini.com/rss/en/news",
-      "cat": "Asia"
-    },
-    {
-      "name": "Daily Star Lebanon",
-      "url": "https://www.dailystar.com.lb/RSS.aspx?local=False",
-      "cat": "Asia"
-    },
-    {
-      "name": "News24",
-      "url": "https://feeds.news24.com/articles/news24/Africa/rss",
-      "cat": "África"
-    },
-    {
-      "name": "Mail & Guardian",
-      "url": "https://mg.co.za/feed/",
-      "cat": "África"
-    },
-    {
-      "name": "Daily Maverick",
-      "url": "https://www.dailymaverick.co.za/rss/",
-      "cat": "África"
-    },
-    {
-      "name": "Premium Times",
-      "url": "https://www.premiumtimesng.com/feed",
-      "cat": "África"
-    },
-    {
-      "name": "Vanguard Nigeria",
-      "url": "https://www.vanguardngr.com/feed/",
-      "cat": "África"
-    },
-    {
-      "name": "The Star Kenya",
-      "url": "https://www.the-star.co.ke/rss",
-      "cat": "África"
-    },
-    {
-      "name": "Standard Kenya",
-      "url": "https://www.standardmedia.co.ke/rss/headlines.php",
-      "cat": "África"
-    },
-    {
-      "name": "AllAfrica",
-      "url": "https://allafrica.com/tools/headlines/rdf/latest/headlines.rdf",
-      "cat": "África"
-    },
-    {
-      "name": "Africanews",
-      "url": "https://www.africanews.com/feed/",
-      "cat": "África"
-    },
-    {
-      "name": "SABC",
-      "url": "https://www.sabcnews.com/sabcnews/category/africa/feed/",
-      "cat": "África"
-    },
-    {
-      "name": "The Citizen ZA",
-      "url": "https://www.citizen.co.za/feed/",
-      "cat": "África"
-    },
-    {
-      "name": "Daily Nation",
-      "url": "https://nation.africa/kenya/rss",
-      "cat": "África"
-    },
-    {
-      "name": "Egyptian Streets",
-      "url": "https://egyptianstreets.com/feed/",
-      "cat": "África"
-    },
-    {
-      "name": "Morocco World News",
-      "url": "https://www.moroccoworldnews.com/feed/",
-      "cat": "África"
-    },
-    {
-      "name": "The EastAfrican",
-      "url": "https://www.theeastafrican.co.ke/tea/rss",
-      "cat": "África"
-    },
-    {
-      "name": "Punch Nigeria",
-      "url": "https://punchng.com/feed/",
-      "cat": "África"
-    },
-    {
-      "name": "Independent Uganda",
-      "url": "https://www.independent.co.ug/feed/",
-      "cat": "África"
-    },
-    {
-      "name": "New Era Namibia",
-      "url": "https://neweralive.na/feed/",
-      "cat": "África"
-    },
-    {
-      "name": "Times of Zambia",
-      "url": "https://www.times.co.zm/?feed=rss2",
-      "cat": "África"
-    },
-    {
-      "name": "Guardian Nigeria",
-      "url": "https://guardian.ng/feed/",
-      "cat": "África"
-    },
-    {
-      "name": "ABC News AU",
-      "url": "https://www.abc.net.au/news/feed/51120/rss.xml",
-      "cat": "Oceanía"
-    },
-    {
-      "name": "Sydney Morning Herald",
-      "url": "https://www.smh.com.au/rss/world.xml",
-      "cat": "Oceanía"
-    },
-    {
-      "name": "The Age",
-      "url": "https://www.theage.com.au/rss/world.xml",
-      "cat": "Oceanía"
-    },
-    {
-      "name": "NZ Herald",
-      "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/world/",
-      "cat": "Oceanía"
-    },
-    {
-      "name": "RNZ",
-      "url": "https://www.rnz.co.nz/rss/world.xml",
-      "cat": "Oceanía"
-    },
-    {
-      "name": "Brisbane Times",
-      "url": "https://www.brisbanetimes.com.au/rss/world.xml",
-      "cat": "Oceanía"
-    },
-    {
-      "name": "WA Today",
-      "url": "https://www.watoday.com.au/rss/world.xml",
-      "cat": "Oceanía"
-    },
-    {
-      "name": "News.com.au",
-      "url": "https://www.news.com.au/world/rss",
-      "cat": "Oceanía"
-    },
-    {
-      "name": "Daily Telegraph AU",
-      "url": "https://www.dailytelegraph.com.au/news/world/rss",
-      "cat": "Oceanía"
-    },
-    {
-      "name": "Courier Mail",
-      "url": "https://www.couriermail.com.au/news/world/rss",
-      "cat": "Oceanía"
-    },
-    {
-      "name": "Wired",
-      "url": "https://www.wired.com/feed/rss",
-      "cat": "Tech"
-    },
-    {
-      "name": "TechCrunch",
-      "url": "https://techcrunch.com/feed/",
-      "cat": "Tech"
-    },
-    {
-      "name": "The Verge",
-      "url": "https://www.theverge.com/rss/index.xml",
-      "cat": "Tech"
-    },
-    {
-      "name": "Ars Technica",
-      "url": "https://feeds.arstechnica.com/arstechnica/index",
-      "cat": "Tech"
-    },
-    {
-      "name": "Engadget",
-      "url": "https://www.engadget.com/rss.xml",
-      "cat": "Tech"
-    },
-    {
-      "name": "ScienceDaily",
-      "url": "https://www.sciencedaily.com/rss/top/science.xml",
-      "cat": "Ciencia"
-    },
-    {
-      "name": "Space.com",
-      "url": "https://www.space.com/feeds/all",
-      "cat": "Ciencia"
-    },
-    {
-      "name": "Phys.org",
-      "url": "https://phys.org/rss-feed/",
-      "cat": "Ciencia"
-    },
-    {
-      "name": "Nature",
-      "url": "https://www.nature.com/nature/current_issue/rss",
-      "cat": "Ciencia"
-    },
-    {
-      "name": "Scientific American",
-      "url": "https://rss.sciam.com/scientificamerican/news/feed",
-      "cat": "Ciencia"
-    },
+    { "name": "NYT Americas", "url": "https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml", "cat": "América" },
+    { "name": "CBC News", "url": "https://www.cbc.ca/cmlink/rss-world", "cat": "América" },
+    { "name": "Mercopress", "url": "https://en.mercopress.com/rss/", "cat": "América" },
+    { "name": "Rio Times", "url": "https://www.riotimesonline.com/feed/", "cat": "América" },
+    { "name": "Buenos Aires Times", "url": "https://www.batimes.com.ar/feed", "cat": "América" },
+    { "name": "NPR World", "url": "https://feeds.npr.org/1004/rss.xml", "cat": "América" },
+    { "name": "LA Times", "url": "https://www.latimes.com/world-nation/rss2.0.xml", "cat": "América" },
+    { "name": "Washington Post", "url": "https://feeds.washingtonpost.com/rss/world", "cat": "América" },
+    { "name": "The Globe and Mail", "url": "https://www.theglobeandmail.com/arc/outboundfeeds/rss/category/world/", "cat": "América" },
+    { "name": "National Post", "url": "https://nationalpost.com/category/news/world/feed", "cat": "América" },
+    { "name": "Toronto Sun", "url": "https://torontosun.com/category/news/world/feed", "cat": "América" },
+    { "name": "Tico Times", "url": "https://ticotimes.net/feed", "cat": "América" },
+    { "name": "Santiago Times", "url": "https://santiagotimes.cl/feed/", "cat": "América" },
+    { "name": "Folha de S.Paulo", "url": "https://feeds.folha.uol.com.br/mundo/rss091.xml", "cat": "América" },
+    { "name": "Clarín Mundo", "url": "https://www.clarin.com/rss/mundo/", "cat": "América" },
+    { "name": "BBC Europe", "url": "https://feeds.bbci.co.uk/news/world/europe/rss.xml", "cat": "Europa" },
+    { "name": "DW Europe", "url": "https://rss.dw.com/rdf/rss-en-eu", "cat": "Europa" },
+    { "name": "France 24", "url": "https://www.france24.com/en/europe/rss", "cat": "Europa" },
+    { "name": "The Guardian", "url": "https://www.theguardian.com/world/europe-news/rss", "cat": "Europa" },
+    { "name": "El País", "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada", "cat": "Europa" },
+    { "name": "Le Monde", "url": "https://www.lemonde.fr/europe/rss_full.xml", "cat": "Europa" },
+    { "name": "Der Spiegel", "url": "https://www.spiegel.de/international/europe/index.rss", "cat": "Europa" },
+    { "name": "Politico EU", "url": "https://www.politico.eu/feed/", "cat": "Europa" },
+    { "name": "Euronews", "url": "https://www.euronews.com/rss?level=theme&name=news", "cat": "Europa" },
+    { "name": "Sky News", "url": "https://feeds.skynews.com/feeds/rss/world.xml", "cat": "Europa" },
+    { "name": "RTE Ireland", "url": "https://www.rte.ie/news/rss/news-headlines.xml", "cat": "Europa" },
+    { "name": "DutchNews", "url": "https://www.dutchnews.nl/feed/", "cat": "Europa" },
+    { "name": "Helsinki Times", "url": "https://www.helsinkitimes.fi/?format=feed&type=rss", "cat": "Europa" },
+    { "name": "Copenhagen Post", "url": "https://cphpost.dk/feed/", "cat": "Europa" },
+    { "name": "Al Jazeera", "url": "https://www.aljazeera.com/xml/rss/all.xml", "cat": "Asia" },
+    { "name": "SCMP", "url": "https://www.scmp.com/rss/91/feed", "cat": "Asia" },
+    { "name": "Japan Times", "url": "https://www.japantimes.co.jp/feed/", "cat": "Asia" },
+    { "name": "Times of India", "url": "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms", "cat": "Asia" },
+    { "name": "The Hindu", "url": "https://www.thehindu.com/news/international/?service=rss", "cat": "Asia" },
+    { "name": "Straits Times", "url": "https://www.straitstimes.com/news/asia/rss.xml", "cat": "Asia" },
+    { "name": "CNA", "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml", "cat": "Asia" },
+    { "name": "Yonhap", "url": "https://en.yna.co.kr/RSS/news.xml", "cat": "Asia" },
+    { "name": "Taipei Times", "url": "https://www.taipeitimes.com/xml/index.rss", "cat": "Asia" },
+    { "name": "Arab News", "url": "https://www.arabnews.com/rss.xml", "cat": "Asia" },
+    { "name": "Dawn", "url": "https://www.dawn.com/feeds/home/", "cat": "Asia" },
+    { "name": "NDTV", "url": "https://feeds.feedburner.com/ndtvnews-world-news", "cat": "Asia" },
+    { "name": "Vietnam Express", "url": "https://e.vnexpress.net/rss/world.rss", "cat": "Asia" },
+    { "name": "Malaysiakini", "url": "https://www.malaysiakini.com/rss/en/news", "cat": "Asia" },
+    { "name": "Daily Maverick", "url": "https://www.dailymaverick.co.za/rss/", "cat": "África" },
+    { "name": "Vanguard Nigeria", "url": "https://www.vanguardngr.com/feed/", "cat": "África" },
+    { "name": "Standard Kenya", "url": "https://www.standardmedia.co.ke/rss/headlines.php", "cat": "África" },
+    { "name": "AllAfrica", "url": "https://allafrica.com/tools/headlines/rdf/latest/headlines.rdf", "cat": "África" },
+    { "name": "Africanews", "url": "https://www.africanews.com/feed/", "cat": "África" },
+    { "name": "SABC", "url": "https://www.sabcnews.com/sabcnews/category/africa/feed/", "cat": "África" },
+    { "name": "Egyptian Streets", "url": "https://egyptianstreets.com/feed/", "cat": "África" },
+    { "name": "Punch Nigeria", "url": "https://punchng.com/feed/", "cat": "África" },
+    { "name": "Independent Uganda", "url": "https://www.independent.co.ug/feed/", "cat": "África" },
+    { "name": "New Era Namibia", "url": "https://neweralive.na/feed/", "cat": "África" },
+    { "name": "Times of Zambia", "url": "https://www.times.co.zm/?feed=rss2", "cat": "África" },
+    { "name": "ABC News AU", "url": "https://www.abc.net.au/news/feed/51120/rss.xml", "cat": "Oceanía" },
+    { "name": "Sydney Morning Herald", "url": "https://www.smh.com.au/rss/world.xml", "cat": "Oceanía" },
+    { "name": "The Age", "url": "https://www.theage.com.au/rss/world.xml", "cat": "Oceanía" },
+    { "name": "RNZ", "url": "https://www.rnz.co.nz/rss/world.xml", "cat": "Oceanía" },
+    { "name": "Brisbane Times", "url": "https://www.brisbanetimes.com.au/rss/world.xml", "cat": "Oceanía" },
+    { "name": "WA Today", "url": "https://www.watoday.com.au/rss/world.xml", "cat": "Oceanía" },
+    { "name": "Wired", "url": "https://www.wired.com/feed/rss", "cat": "Tech" },
+    { "name": "TechCrunch", "url": "https://techcrunch.com/feed/", "cat": "Tech" },
+    { "name": "The Verge", "url": "https://www.theverge.com/rss/index.xml", "cat": "Tech" },
+    { "name": "Ars Technica", "url": "https://feeds.arstechnica.com/arstechnica/index", "cat": "Tech" },
+    { "name": "Engadget", "url": "https://www.engadget.com/rss.xml", "cat": "Tech" },
+    { "name": "ScienceDaily", "url": "https://www.sciencedaily.com/rss/top/science.xml", "cat": "Ciencia" },
+    { "name": "Space.com", "url": "https://www.space.com/feeds/all", "cat": "Ciencia" },
+    { "name": "Phys.org", "url": "https://phys.org/rss-feed/", "cat": "Ciencia" },
+    { "name": "Nature", "url": "https://www.nature.com/nature/current_issue/rss", "cat": "Ciencia" },
     { "name": "El País", "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada", "cat": "España" },
     { "name": "El Mundo", "url": "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml", "cat": "España" },
-    { "name": "ABC", "url": "https://www.abc.es/rss/2.0/portada.xml", "cat": "España" },
     { "name": "La Vanguardia", "url": "https://www.lavanguardia.com/rss/home.xml", "cat": "España" },
     { "name": "elDiario.es", "url": "https://www.eldiario.es/rss/", "cat": "España" },
-    { "name": "RTVE Noticias", "url": "https://www.rtve.es/api/noticias.rss", "cat": "España" },
-    { "name": "El Confidencial", "url": "https://www.elconfidencial.com/rss/", "cat": "España" },
     { "name": "El Español", "url": "https://www.elespanol.com/rss/", "cat": "España" },
     { "name": "Europa Press", "url": "https://www.europapress.es/rss/rss.aspx?ch=00066", "cat": "España" },
-    { "name": "Público", "url": "https://www.publico.es/rss/", "cat": "España" },
     { "name": "20 Minutos", "url": "https://www.20minutos.es/rss/", "cat": "España" },
     { "name": "La Razón", "url": "https://www.larazon.es/rss/portada.xml", "cat": "España" },
     { "name": "Cinco Días", "url": "https://cincodias.elpais.com/rss/portada.xml", "cat": "España" },
