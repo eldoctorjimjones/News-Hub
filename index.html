@@ -10,9 +10,9 @@
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; flex-direction: column; min-height: 100vh; }
         .container { max-width: 1200px; margin: 0 auto; flex: 1; }
         
-        /* Header & Logo */
+        /* Header y Logo */
         header { text-align: center; margin-bottom: 30px; }
-        .logo { width: 120px; height: 120px; border-radius: 50%; margin-bottom: 10px; border: 3px solid var(--primary); }
+        .logo { width: 120px; height: 120px; border-radius: 50%; margin-bottom: 10px; border: 3px solid var(--primary); object-fit: cover; }
         header h1 { font-family: 'Stalinist One', cursive; font-size: 2.5rem; color: var(--primary); margin: 0; text-shadow: 2px 2px 0px #0f172a; }
         
         #search-bar { width: 100%; max-width: 600px; padding: 12px 20px; border: 2px solid #e2e8f0; border-radius: 50px; margin-bottom: 20px; font-size: 1rem; transition: border-color 0.3s; }
@@ -39,7 +39,7 @@
 <body>
     <div class="container">
         <header>
-            <img src="nGOUKYzI_400x400.jpg" alt="Horny Report" class="logo">
+            <img src="nGOUKYzI_400x400.jpg" alt="Logo" class="logo">
             <h1>EL DOCTOR NEWS HUB</h1>
             <p>Radar Informativo Global</p>
         </header>
@@ -77,8 +77,8 @@
 
         async function load() {
             try {
-                // Se asume que el backend lee el archivo feeds.json
-                const res = await fetch('/api/news');
+                // Añadimos un timestamp (?t=) para evitar que el navegador guarde en caché datos viejos
+                const res = await fetch('/api/news?t=' + new Date().getTime());
                 allNews = await res.json();
                 loader.style.display = 'none';
                 render(allNews);
@@ -123,6 +123,9 @@
 
         function generateHornyMenu(data) {
             const select = document.getElementById('horny-dropdown');
+            // IMPORTANTE: Limpiamos el menú antes de añadir nada para evitar duplicados
+            select.innerHTML = '<option value="">Horny Report 🎙️</option>';
+            
             const programs = [...new Set(data.map(n => n.category).filter(c => c && c.startsWith('Horny Report')))].sort();
             programs.forEach(prog => {
                 const opt = document.createElement('option');
@@ -131,7 +134,11 @@
             });
         }
         
+        // Carga inicial
         load();
+        
+        // Auto-refresh cada 30 segundos para que los datos estén siempre frescos
+        setInterval(load, 30000);
     </script>
 </body>
 </html>
