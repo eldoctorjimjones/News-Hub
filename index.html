@@ -24,6 +24,14 @@
         .card .link-container { margin-top: auto; padding-top: 15px; border-top: 1px solid #f1f5f9; }
         .card a { color: var(--primary); font-weight: 600; text-decoration: none; }
         .card a:hover { text-decoration: underline; }
+        .card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: block;
+}
     </style>
 </head>
 <body>
@@ -63,22 +71,26 @@
             }
         }
         
-        function render(data) {
-            if (!data || data.length === 0) {
-                document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">No hay noticias en esta categoría.</p>';
-                return;
-            }
-            document.getElementById('news-container').innerHTML = data.map(n => {
-                const displayCat = n.category || 'General';
-                return `
-                    <div class="card">
-                        <small>${displayCat} • ${n.name || 'Agencia'}</small>
-                        <h3>${n.title}</h3>
-                        <div class="link-container"><a href="${n.link}" target="_blank">Revisar enlace →</a></div>
-                    </div>
-                `;
-            }).join('');
+    function render(data) {
+        if (!data || data.length === 0) {
+        document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">No hay noticias en esta categoría.</p>';
+        return;
         }
+        document.getElementById('news-container').innerHTML = data.map(n => {
+        const displayCat = n.category || 'General';
+        // AÑADE ESTA LÍNEA AQUÍ: Crea el HTML de la imagen solo si existe
+        const imgHTML = n.image_url ? `<img src="${n.image_url}" alt="Noticia">` : '';
+        
+        return `
+            <div class="card">
+                ${imgHTML} <!-- INSERTAMOS LA IMAGEN AQUÍ -->
+                <small>${displayCat} • ${n.name || 'Agencia'}</small>
+                <h3>${n.title}</h3>
+                <div class="link-container"><a href="${n.link}" target="_blank">Revisar enlace →</a></div>
+            </div>
+        `;
+    }).join('');
+} 
         
         function filter(cat) {
             document.querySelectorAll('button').forEach(b => {
