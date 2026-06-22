@@ -42,17 +42,18 @@
             <input type="text" id="search-bar" placeholder="🔍 Buscar noticias...">
         </div>
         
-        <nav id="filters">
-            <button class="active" onclick="filter('Todas')">Todas</button>
-            <button onclick="filter('América')">América</button>
-            <button onclick="filter('Europa')">Europa</button>
-            <button onclick="filter('Asia')">Asia</button>
-            <button onclick="filter('África')">África</button>
-            <button onclick="filter('Tech')">Tecnología</button>
-            <select id="horny-dropdown" onchange="filter(this.value)">
-                <option value="">Horny Report 🎙️</option>
-            </select>
-        </nav>
+       <nav id="filters">
+    <button class="active" onclick="filter('Todas')">Todas</button>
+    <button onclick="filter('América')">América</button>
+    <button onclick="filter('Europa')">Europa</button>
+    <button onclick="filter('España')">España</button> <!-- Añade esta línea -->
+    <button onclick="filter('Asia')">Asia</button>
+    <button onclick="filter('África')">África</button>
+    <button onclick="filter('Tech')">Tecnología</button>
+    <select id="horny-dropdown" onchange="filter(this.value)">
+        <option value="">Horny Report 🎙️</option>
+    </select>
+</nav>
         
         <div id="loader">Cargando la verdad...</div>
         <div id="news-container"></div>
