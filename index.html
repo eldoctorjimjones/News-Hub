@@ -71,25 +71,31 @@
             }
         }
         
-        function render(data) {
-            if (!data || data.length === 0) {
-                document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">No hay noticias en esta categoría.</p>';
-                return;
-            }
-            document.getElementById('news-container').innerHTML = data.map(n => {
-                const displayCat = n.category || 'General';
-                const imgHTML = n.image_url ? `<img src="${n.image_url}" alt="Noticia">` : '';
-                
-                return `
-                    <div class="card">
-                        ${imgHTML}
-                        <small>${displayCat} • ${n.name || 'Agencia'}</small>
-                        <h3>${n.title}</h3>
-                        <div class="link-container"><a href="${n.link}" target="_blank">Revisar enlace →</a></div>
-                    </div>
-                `;
-            }).join('');
-        } 
+function render(data) {
+    if (!data || data.length === 0) {
+        document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">No hay noticias aquí.</p>';
+        return;
+    }
+
+    document.getElementById('news-container').innerHTML = data.map(n => {
+        const displayCat = n.category || 'General';
+        
+        // CORRECCIÓN: Si no hay image_url, ni siquiera intentamos pintar la etiqueta <img>
+        // También añadimos 'onerror' para que si la imagen da error, se oculte sola
+        const imgHTML = (n.image_url && n.image_url.trim() !== "") 
+            ? `<img src="${n.image_url}" alt="" onerror="this.style.display='none'">` 
+            : '';
+        
+        return `
+            <div class="card">
+                ${imgHTML}
+                <small>${displayCat} • ${n.name || 'Agencia'}</small>
+                <h3>${n.title}</h3>
+                <div class="link-container"><a href="${n.link}" target="_blank">Revisar enlace →</a></div>
+            </div>
+        `;
+    }).join('');
+}
 
         function generateHornyMenu(data) {
             const select = document.getElementById('horny-dropdown');
@@ -145,6 +151,21 @@
                 }
                 return itemCat === targetCat;
             });
+
+            // Dentro de la función filter, donde hacemos el filtro de datos:
+const filteredData = allNews.filter(n => {
+    const itemCat = (n.category || '').toLowerCase().trim();
+    const targetCat = cat.toLowerCase().trim();
+    
+    // Si es un Horny Report, buscamos que contenga el número
+    if (targetCat.includes('horny report')) {
+        return itemCat === targetCat;
+    }
+    
+    // Resto de categorías
+    if (cat === 'Tech') return itemCat === 'tech' || itemCat === 'tecnología';
+    return itemCat === targetCat;
+});
             
             render(filteredData);
         }
