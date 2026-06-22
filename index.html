@@ -45,8 +45,6 @@
             <button onclick="filter('Asia')">Asia</button>
             <button onclick="filter('África')">África</button>
             <button onclick="filter('Tech')">Tecnología</button>
-            
-            <!-- NUEVO: Desplegable automático para los programas de Horny Report -->
             <select id="horny-dropdown" onchange="filter(this.value)">
                 <option value="">Horny Report 🎙️</option>
             </select>
@@ -59,85 +57,76 @@
         let allNews = [];
         
         async function load() {
-            document.getElementById('news-container').innerHTML = '<h3 style="text-align:center; width:100%;">📡 Cargando satélites...</h3>';
             try {
-                // NOTA: Si sigue sin salir nada, verifica si tu ruta en server.js es '/api/news' o solo '/news'
                 const res = await fetch('/api/news');
                 allNews = await res.json();
                 render(allNews);
-                generateHornyMenu(allNews); // Genera el desplegable con los programas que encuentre
+                generateHornyMenu(allNews);
             } catch (err) {
                 document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">Error al conectar con la base de datos.</p>';
             }
         }
         
-function render(data) {
-    if (!data || data.length === 0) {
-        document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">No hay noticias aquí.</p>';
-        return;
-    }
-
-    document.getElementById('news-container').innerHTML = data.map(n => {
-        const displayCat = n.category || 'General';
-        
-        // CORRECCIÓN: Si no hay image_url, ni siquiera intentamos pintar la etiqueta <img>
-        // También añadimos 'onerror' para que si la imagen da error, se oculte sola
-        const imgHTML = (n.image_url && n.image_url.trim() !== "") 
-            ? `<img src="${n.image_url}" alt="" onerror="this.style.display='none'">` 
-            : '';
-        
-        return `
-            <div class="card">
-                ${imgHTML}
-                <small>${displayCat} • ${n.name || 'Agencia'}</small>
-                <h3>${n.title}</h3>
-                <div class="link-container"><a href="${n.link}" target="_blank">Revisar enlace →</a></div>
-            </div>
-        `;
-    }).join('');
-}
+        function render(data) {
+            if (!data || data.length === 0) {
+                document.getElementById('news-container').innerHTML = '<p style="text-align:center; width:100%;">No hay resultados.</p>';
+                return;
+            }
+            
+            document.getElementById('news-container').innerHTML = data.map(n => {
+                const displayCat = n.category || 'General';
+                // Si la imagen está vacía o es una cadena vacía, no la mostramos.
+                // Usamos onerror para ocultar la imagen si el link es inválido (enlace roto).
+                const imgHTML = (n.image_url && n.image_url.trim() !== "" && n.image_url !== "null") 
+                    ? `<img src="${n.image_url}" alt="Noticia" onerror="this.style.display='none'">` 
+                    : '';
+                
+                return `
+                    <div class="card">
+                        ${imgHTML}
+                        <small>${displayCat} • ${n.name || 'Agencia'}</small>
+                        <h3>${n.title}</h3>
+                        <div class="link-container"><a href="${n.link}" target="_blank">Revisar enlace →</a></div>
+                    </div>
+                `;
+            }).join('');
+        }
 
         function generateHornyMenu(data) {
             const select = document.getElementById('horny-dropdown');
-            select.innerHTML = '<option value="">Horny Report 🎙️</option>'; // Resetear
-            
-            // Filtra categorías únicas que empiecen por "Horny Report"
             const programs = [...new Set(data
                 .map(n => n.category)
                 .filter(c => c && c.startsWith('Horny Report'))
-            )].sort((a, b) => b.localeCompare(a)); // Ordena de mayor a menor (Ej: 433, 432...)
+            )].sort((a, b) => b.localeCompare(a));
 
             programs.forEach(prog => {
                 const opt = document.createElement('option');
                 opt.value = prog;
-                opt.innerText = prog;
+                opt.innerText = prog; // Esto mostrará "Horny Report 433"
                 select.appendChild(opt);
             });
         }
         
         function filter(cat) {
             const dropdown = document.getElementById('horny-dropdown');
-
-            // Si el usuario selecciona el título del desplegable, reseteamos a "Todas"
+            
             if (cat === "") {
                 dropdown.classList.remove('active');
-                filter('Todas');
+                render(allNews);
                 return;
             }
             
-            // Gestionar estados activos de los botones normales
             document.querySelectorAll('button').forEach(b => {
                 const btnText = b.innerText.trim();
                 b.classList.toggle('active', btnText === cat || (cat === 'Tech' && btnText === 'Tecnología'));
             });
             
-            // Gestionar estado activo si es un programa de Horny Report
             if (cat.startsWith('Horny Report')) {
                 dropdown.classList.add('active');
                 document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
             } else {
                 dropdown.classList.remove('active');
-                dropdown.value = ""; // Resetea el desplegable visualmente si pulsas otro botón
+                dropdown.value = "";
             }
             
             if (cat === 'Todas') { render(allNews); return; }
@@ -145,37 +134,15 @@ function render(data) {
             const filteredData = allNews.filter(n => {
                 const itemCat = (n.category || '').toLowerCase().trim();
                 const targetCat = cat.toLowerCase().trim();
-                
-                if (cat === 'Tech') {
-                    return itemCat === 'tech' || itemCat === 'tecnología';
-                }
+                if (cat === 'Tech') return itemCat === 'tech' || itemCat === 'tecnología';
                 return itemCat === targetCat;
             });
-
-            // Dentro de la función filter, donde hacemos el filtro de datos:
-const filteredData = allNews.filter(n => {
-    const itemCat = (n.category || '').toLowerCase().trim();
-    const targetCat = cat.toLowerCase().trim();
-    
-    // Si es un Horny Report, buscamos que contenga el número
-    if (targetCat.includes('horny report')) {
-        return itemCat === targetCat;
-    }
-    
-    // Resto de categorías
-    if (cat === 'Tech') return itemCat === 'tech' || itemCat === 'tecnología';
-    return itemCat === targetCat;
-});
-            
             render(filteredData);
         }
         
         document.getElementById('search-bar').addEventListener('input', e => {
             const t = e.target.value.toLowerCase();
-            render(allNews.filter(n => 
-                (n.title && n.title.toLowerCase().includes(t)) || 
-                (n.category && n.category.toLowerCase().includes(t))
-            ));
+            render(allNews.filter(n => (n.title && n.title.toLowerCase().includes(t)) || (n.category && n.category.toLowerCase().includes(t))));
         });
         
         load();
