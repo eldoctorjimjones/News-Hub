@@ -6,29 +6,27 @@
     <title>El Doctor News Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Stalinist+One&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #dc2626; --bg: #f8fafc; --text: #1e293b; --card-bg: #ffffff; }
+        :root { --primary: #dc2626; --bg: #f8fafc; --text: #1e293b; --card-bg: #ffffff; --shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
         .container { max-width: 1200px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { font-family: 'Stalinist One', cursive; font-size: 2.8rem; color: var(--primary); margin-bottom: 5px; text-shadow: 2px 2px 0px #0f172a; }
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { font-family: 'Stalinist One', cursive; font-size: 2.5rem; color: var(--primary); margin: 0; text-shadow: 2px 2px 0px #0f172a; }
         
-        /* Spinner */
-        #loader { text-align: center; padding: 50px; font-weight: 600; color: #64748b; }
+        #search-bar { width: 100%; max-width: 600px; padding: 12px 20px; border: 2px solid #e2e8f0; border-radius: 50px; margin-bottom: 20px; font-size: 1rem; transition: border-color 0.3s; }
+        #search-bar:focus { outline: none; border-color: var(--primary); }
         
-        #search-bar { width: 100%; max-width: 600px; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; font-size: 1rem; }
-        nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
-        button, select { padding: 10px 20px; border: none; border-radius: 25px; cursor: pointer; background: #e2e8f0; font-weight: 600; transition: all 0.2s; color: var(--text); }
-        button:hover, select:hover { background: #cbd5e1; transform: translateY(-2px); }
-        button.active, select.active { background: var(--primary); color: white; }
-
-        #news-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; min-height: 300px; }
-        .card { background: var(--card-bg); border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; border: 1px solid #f1f5f9; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-        .card h3 { font-size: 1.1rem; line-height: 1.4; margin: 0 0 15px 0; color: #0f172a; }
-        .card small { font-weight: 700; font-size: 0.70rem; text-transform: uppercase; padding: 4px 8px; background: #fee2e2; border-radius: 6px; color: var(--primary); margin-bottom: 10px; display: inline-block; }
-        .card .link-container { margin-top: auto; padding-top: 15px; border-top: 1px solid #f1f5f9; }
-        .card a { color: var(--primary); font-weight: 600; text-decoration: none; font-size: 0.9rem; }
-        .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; background: #f1f5f9; }
+        nav { display: flex; justify-content: center; gap: 8px; margin-bottom: 30px; flex-wrap: wrap; }
+        button, select { padding: 8px 18px; border: 1px solid #e2e8f0; border-radius: 20px; cursor: pointer; background: white; font-weight: 600; transition: all 0.2s; }
+        button.active { background: var(--primary); color: white; border-color: var(--primary); }
+        
+        #news-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; opacity: 1; transition: opacity 0.3s ease-in; }
+        .card { background: var(--card-bg); border-radius: 12px; padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; border: 1px solid #e2e8f0; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-4px); }
+        .card img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; background: #f1f5f9; }
+        .card small { font-size: 0.65rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 8px; }
+        .card h3 { font-size: 1.05rem; line-height: 1.3; margin: 0 0 12px 0; }
+        .link-container { margin-top: auto; padding-top: 12px; }
+        .link-container a { color: var(--primary); font-weight: 600; text-decoration: none; font-size: 0.85rem; }
     </style>
 </head>
 <body>
@@ -39,94 +37,88 @@
         </header>
         
         <div style="text-align: center;">
-            <input type="text" id="search-bar" placeholder="🔍 Buscar noticias...">
+            <input type="text" id="search-bar" placeholder="🔍 Buscar en todas las noticias...">
         </div>
         
-       <nav id="filters">
-    <button class="active" onclick="filter('Todas')">Todas</button>
-    <button onclick="filter('América')">América</button>
-    <button onclick="filter('Europa')">Europa</button>
-    <button onclick="filter('España')">España</button> <!-- Añade esta línea -->
-    <button onclick="filter('Asia')">Asia</button>
-    <button onclick="filter('África')">África</button>
-    <button onclick="filter('Tech')">Tecnología</button>
-    <select id="horny-dropdown" onchange="filter(this.value)">
-        <option value="">Horny Report 🎙️</option>
-    </select>
-</nav>
+        <nav id="filters">
+            <button class="active" onclick="filter('Todas', this)">Todas</button>
+            <button onclick="filter('América', this)">América</button>
+            <button onclick="filter('Europa', this)">Europa</button>
+            <button onclick="filter('España', this)">España</button>
+            <button onclick="filter('Asia', this)">Asia</button>
+            <button onclick="filter('África', this)">África</button>
+            <button onclick="filter('Tech', this)">Tecnología</button>
+            <select id="horny-dropdown" onchange="filter(this.value, this)">
+                <option value="">Horny Report 🎙️</option>
+            </select>
+        </nav>
         
-        <div id="loader">Cargando la verdad...</div>
+        <div id="loader" style="text-align:center; padding: 40px;">Cargando, por favor espera...</div>
         <div id="news-container"></div>
     </div>
 
     <script>
         let allNews = [];
+        let searchTimeout;
         const container = document.getElementById('news-container');
         const loader = document.getElementById('loader');
-        
+
         async function load() {
             try {
                 const res = await fetch('/api/news');
                 allNews = await res.json();
-                loader.style.display = 'none'; // Ocultar carga
+                loader.style.display = 'none';
                 render(allNews);
                 generateHornyMenu(allNews);
             } catch (err) {
-                loader.innerHTML = '⚠️ Error conectando con la base de datos. Intenta recargar en un momento.';
+                loader.innerHTML = '⚠️ Error conectando al servidor. Recarga la página.';
             }
         }
         
         function render(data) {
-            if (!data || data.length === 0) {
-                container.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1;">No hay resultados.</p>';
-                return;
-            }
-            
-            container.innerHTML = data.map(n => {
-                const imgHTML = (n.image_url && n.image_url !== 'null' && n.image_url.trim() !== '') 
-                    ? `<img src="${n.image_url}" alt="Noticia" onerror="this.style.display='none'">` 
-                    : '';
-                
-                return `
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.innerHTML = data.map(n => `
                     <div class="card">
-                        ${imgHTML}
+                        ${(n.image_url && n.image_url !== 'null') ? `<img src="${n.image_url}" onerror="this.style.display='none'">` : ''}
                         <div>
                             <small>${n.category || 'General'}</small>
                             <h3>${n.title}</h3>
                         </div>
                         <div class="link-container"><a href="${n.link}" target="_blank">Leer fuente →</a></div>
                     </div>
-                `;
-            }).join('');
+                `).join('');
+                container.style.opacity = '1';
+            }, 150);
         }
 
-        // ... (Tu función generateHornyMenu y filter se mantienen igual, funcionan perfecto)
+        function filter(cat, el) {
+            // UI Logic
+            document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            if (el.tagName === 'BUTTON') el.classList.add('active');
+            
+            // Filter Logic
+            const filtered = (cat === 'Todas' || cat === '') ? allNews : allNews.filter(n => (n.category || '').toLowerCase().includes(cat.toLowerCase()));
+            render(filtered);
+        }
+
+        document.getElementById('search-bar').addEventListener('input', e => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const t = e.target.value.toLowerCase();
+                render(allNews.filter(n => n.title.toLowerCase().includes(t) || (n.category && n.category.toLowerCase().includes(t))));
+            }, 300);
+        });
+
         function generateHornyMenu(data) {
             const select = document.getElementById('horny-dropdown');
-            const programs = [...new Set(data.map(n => n.category).filter(c => c && c.startsWith('Horny Report')))].sort((a, b) => b.localeCompare(a));
+            const programs = [...new Set(data.map(n => n.category).filter(c => c && c.startsWith('Horny Report')))].sort();
             programs.forEach(prog => {
                 const opt = document.createElement('option');
                 opt.value = prog; opt.innerText = prog;
                 select.appendChild(opt);
             });
         }
-        
-        function filter(cat) {
-            const dropdown = document.getElementById('horny-dropdown');
-            if (cat === "") { dropdown.classList.remove('active'); render(allNews); return; }
-            document.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.innerText.trim() === cat));
-            
-            if (cat.startsWith('Horny Report')) { dropdown.classList.add('active'); } 
-            else { dropdown.classList.remove('active'); dropdown.value = ""; }
-            
-            if (cat === 'Todas') { render(allNews); return; }
-            render(allNews.filter(n => (n.category || '').toLowerCase().includes(cat.toLowerCase())));
-        }
-        
-        document.getElementById('search-bar').addEventListener('input', e => {
-            const t = e.target.value.toLowerCase();
-            render(allNews.filter(n => n.title.toLowerCase().includes(t) || (n.category && n.category.toLowerCase().includes(t))));
-        });
         
         load();
     </script>
