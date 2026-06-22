@@ -499,6 +499,26 @@
       "name": "Scientific American",
       "url": "https://rss.sciam.com/scientificamerican/news/feed",
       "cat": "Ciencia"
-    }
+    },
+    { "name": "El País", "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada", "cat": "España" },
+    { "name": "El Mundo", "url": "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml", "cat": "España" },
+    { "name": "ABC", "url": "https://www.abc.es/rss/2.0/portada.xml", "cat": "España" },
+    { "name": "La Vanguardia", "url": "https://www.lavanguardia.com/rss/home.xml", "cat": "España" },
+    { "name": "elDiario.es", "url": "https://www.eldiario.es/rss/", "cat": "España" },
+    { "name": "RTVE Noticias", "url": "https://www.rtve.es/api/noticias.rss", "cat": "España" },
+    { "name": "El Confidencial", "url": "https://www.elconfidencial.com/rss/", "cat": "España" },
+    { "name": "El Español", "url": "https://www.elespanol.com/rss/", "cat": "España" },
+    { "name": "Europa Press", "url": "https://www.europapress.es/rss/rss.aspx?ch=00066", "cat": "España" },
+    { "name": "Público", "url": "https://www.publico.es/rss/", "cat": "España" },
+    { "name": "20 Minutos", "url": "https://www.20minutos.es/rss/", "cat": "España" },
+    { "name": "La Razón", "url": "https://www.larazon.es/rss/portada.xml", "cat": "España" },
+    { "name": "Cinco Días", "url": "https://cincodias.elpais.com/rss/portada.xml", "cat": "España" },
+    { "name": "Expansión", "url": "https://e00-expansion.uecdn.es/rss/portada.xml", "cat": "España" },
+    { "name": "Marca", "url": "https://e00-marca.uecdn.es/rss/marca/portada.xml", "cat": "España" },
+    { "name": "AS", "url": "https://as.com/rss/portada.xml", "cat": "España" },
+    { "name": "La Voz de Galicia", "url": "https://www.lavozdegalicia.es/rss/index.jsp", "cat": "España" },
+    { "name": "El Periódico", "url": "https://www.elperiodico.com/es/rss/rss.xml", "cat": "España" },
+    { "name": "HuffPost ES", "url": "https://www.huffingtonpost.es/feeds/index.xml", "cat": "España" },
+    { "name": "Vozpópuli", "url": "https://www.vozpopuli.com/rss/", "cat": "España" }
   ]
 }
