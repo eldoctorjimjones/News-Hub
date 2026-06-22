@@ -1,100 +1,99 @@
 const manualNews = [
      
--- ('Horny Report', 'Manual', 'Inmortal Vlad', 'https://www.elconfidencial.com/tecnologia/ciencia/2026-06-12/putin-150-anos-rusia-22500m-euros-1qrt_4370450/', NULL),
--- 
--- ('Horny Report', 'Manual', 'Remeras PaperClip', 'https://www.minutouno.com/sociedad/vendia-uniformes-militares-marketplace-lo-allanaron-y-tenia-un-arsenal-nazi-n6287180', NULL),
--- 
--- ('Horny Report', 'Manual', 'Ballena Tilly', 'https://www.terra.com.br/vida-e-estilo/pets/baleia-timmy-encontrada-morta-na-dinamarca-tera-a-gordura-transformada-em-biodiesel-e-biomassa-saiba-como-esse-processo-e-realizado,59bb36e8133d5b11ca98abecd433ea19djsfamqj.html', NULL),
--- 
--- ('Horny Report', 'Manual', 'PiroPuki', 'https://www.iltalehti.fi/kotimaa/a/fd86a7b9-57aa-40e5-be4e-7d8330b3fa29', NULL),
--- 
--- ('Horny Report', 'Manual', 'Alcohol Online', 'https://www.iltalehti.fi/kotimaa/a/84610517-788e-4e51-822f-b91a3301a3c2', NULL),
--- 
--- ('Horny Report', 'Manual', 'Taza de Coca', 'https://www.visir.is/g/20262895590d/grikki-med-tugi-kiloa-kokains-undir-folsku-golfi', NULL),
--- 
--- ('Horny Report', 'Manual', 'Machirulismo Ortodoxo', 'https://www.aurora-israel.co.il/polemica-en-israel-rabinos-de-yeshivot-anuncian-que-no-enviaran-alumnos-a-unidades-de-tanques-por-la-incorporacion-de-mujeres/#google_vignette', NULL),
--- 
--- ('Horny Report', 'Manual', 'Megabestialismo', 'https://www.nhm.ac.uk/discover/news/2026/june/worlds-largest-scorpion-revealed-415-million-year-old-fossils.html', NULL),
--- 
--- ('Horny Report', 'Manual', 'Boda Satanica', 'https://www.dailystar.co.uk/news/us-news/terrified-woman-flees-police-after-37276896', NULL),
--- 
--- ('Horny Report', 'Manual', 'Cancer Laboral', 'https://www.abcnyheter.no/nyheter/arbeidsrelatert-kreft-tar-langt-flere-liv-enn-arbeidsulykker/1562277', NULL),
--- 
--- ('Horny Report', 'Manual', 'Submarino Nazi', 'https://www.abcnyheter.no/nyheter/ekspertene-om-nazi-ubatvraket-kan-fa-katastrofale-folger-ved-heving/1563394', NULL),
--- 
--- ('Horny Report', 'Manual', 'Agua Dementus', 'https://www.vozpopuli.com/ciencia/los-cientificos-dan-la-voz-de-alarma-el-agua-potable-tiene-un-componente-que-puede-relacionarse-con-el-riesgo-de-demencia.html', NULL),
--- 
--- ('Horny Report', 'Manual', 'Laptops que vuelan', 'https://news.sky.com/story/hundreds-of-phones-and-laptops-lost-by-mod-at-potential-cost-of-more-than-1-6m-13551845', NULL),
--- 
--- ('Horny Report', 'Manual', 'Winston Love', 'https://actualidad.esrt.press/actualidad/610774-condenado-45-anos-prision-robar-200-sets-lego', NULL),
--- 
--- ('Horny Report', 'Manual', 'Banano de visita', 'https://www.prensa-latina.cu/2026/06/12/noboa-se-reunira-con-asesor-de-seguridad-de-trump-en-estados-unidos/', NULL),
--- 
--- ('Horny Report', 'Manual', 'Campaña Antihomeless', 'https://www.arabnews.com/node/2646856/saudi-arabia', NULL),
--- 
--- ('Horny Report', 'Manual', 'Diplomacia Religiosa', 'https://www.arabnews.com/node/2646970/saudi-arabia', NULL),
--- 
--- ('Horny Report', 'Manual', 'Notificacion Roja', 'https://www.sabah.com.tr/yasam/icisleri-bakanligi-acikladi-kirmizi-bultenle-aranan-90-suclu-turkiyeye-getirildi-7602151', NULL),
--- 
--- ('Horny Report', 'Manual', 'JAAC terrorista', 'https://www.arabnews.com/node/2646897/world', NULL),
--- 
--- ('Horny Report', 'Manual', 'LesboSauna antisemita', 'https://www.enlacejudio.com/2026/05/31/mujeres-judias-sufren-antisemitismo-en-barcelona-por-una-estrella-de-david/', NULL),
--- 
--- ('Horny Report', 'Manual', 'Referi Negri', 'https://esrt.space/actualidad/610211-video-arbitro-deportado-eeuu-heroe-somalia', NULL),
--- 
--- ('Horny Report', 'Manual', 'Subnormalidad Influencer', 'https://www.losandes.com.ar/mundo/estados-unidos-advirtio-influencers-cara-al-mundial-podrian-ser-deportados-si-generan-ingresos-n5994428', NULL),
--- 
--- ('Horny Report', 'Manual', 'Extraterrestres Malvados', 'https://www.dailystar.co.uk/news/latest-news/psychic-warns-evil-aliens-abduct-37284206', NULL),
--- 
--- ('Horny Report', 'Manual', 'Drones Hackeados', 'https://www.arabnews.com/node/2646905/world', NULL),
--- 
--- ('Horny Report', 'Manual', 'Muerte Climatica', 'https://www.dawn.com/news/2006917/weather-pattern-el-nino-has-begun-says-us-agency-noaa', NULL),
--- 
--- ('Horny Report', 'Manual', 'Las chicas del tunel', 'https://www.jta.org/2026/06/11/united-states/after-dozens-of-jewish-girls-get-lost-in-ny-creek-tunnel-antisemitic-comments-follow-online', NULL),
--- 
--- ('Horny Report', 'Manual', 'Oficialmente Orcorrushers', 'https://www.ukrinform.es/rubric-crime/4128766-melnyk-califica-de-historica-la-inclusion-del-ejercito-ruso-en-la-lista-negra-de-la-onu-por-crimenes-sexuales.html', NULL),
--- 
--- ('Horny Report', 'Manual', 'Palille consular', 'https://www.africanews.com/2026/06/11/migrant-workers-exploitation-on-flagship-us-building-project-in-italy/', NULL),
--- 
--- ('Horny Report', 'Manual', 'Aldea OjoJuntista', 'https://esrt.space/actualidad/610154-ucranianos-echan-palazos-reclutadores', NULL),
--- 
--- ('Horny Report', 'Manual', 'Hesgeth sudao', 'https://www.cibercuba.com/noticias/2026-06-10-u1-e43231-s27061-nid331836-pete-hegseth-suda-tropas-guantanamo-asi-fue', NULL),
--- 
--- ('Horny Report', 'Manual', 'Madera Bolita', 'https://www.biobiochile.cl/noticias/internacional/america-latina/2026/06/11/allanan-aserraderos-en-bolivia-tras-decomiso-de-mas-de-100-toneladas-de-droga-en-puertos-chilenos.shtml', NULL),
--- 
--- ('Horny Report', 'Manual', 'Laboratorios pestosos', 'https://x.com/DNIGabbard/status/2065440568423944607?s=20', NULL),
--- 
--- ('Horny Report', 'Manual', 'El Chuta', 'https://www.infobae.com/mexico/2026/06/10/el-chuta-jefe-de-seguridad-del-cartel-de-sinaloa-habria-sido-localizado-sin-vida-en-la-comunidad-de-charay/', NULL),
--- 
--- ('Horny Report', 'Manual', 'Cataluña es sionista', 'https://www.enlacejudio.com/2026/06/07/hallan-los-primeros-manuscritos-hebreos-medievales-de-la-region-ocultos-durante-siglos-2/', NULL),
--- 
--- ('Horny Report', 'Manual', 'Orgia Insectoide', 'https://actualidad.esrt.press/actualidad/610673-insectos-cubrir-cielo-turquia', NULL),
--- 
--- ('Horny Report', 'Manual', 'Fitness antisemita', 'https://www.aurora-israel.co.il/informe-alerta-que-instagram-expone-a-usuarios-de-bienestar-y-fitness-a-contenido-antisemita/#google_vignette', NULL),
--- 
--- ('Horny Report', 'Manual', 'Grandes leyendas del deporte judio', 'https://www.jta.org/2026/06/11/sports/meet-matt-turner-the-only-jewish-player-on-team-usa-in-the-world-cup', NULL),
--- 
--- ('Horny Report', 'Manual', 'Cuatreros zambianos', 'https://allafrica.com/stories/202606120510.html', NULL),
--- 
--- ('Horny Report', 'Manual', 'Mundial escolar', 'https://www.africanews.com/2026/06/11/schoolchildren-in-haiti-stage-their-own-world-cup-in-call-for-peace/', NULL),
--- 
--- ('Horny Report', 'Manual', 'Claude LeRoy', 'https://www.africanews.com/2026/06/11/veteran-french-football-coach-to-lead-republic-of-the-congo-team/', NULL),
--- 
--- ('Horny Report', 'Manual', 'Dia del dron', 'https://www.ukrinform.es/rubric-society/4132625-establecido-en-ucrania-el-dia-de-las-fuerzas-de-sistemas-no-tripulados-de-las-fuerzas-armadas-de-ucrania.html', NULL),
--- 
--- ('Horny Report', 'Manual', 'Refugios estonios', 'https://avia-es.com/news/v-gorodah-estonii-nachali-ustanavlivat-mobilnye-betonnye-ubezhishcha-iz-za-ugroz-ukrainy', NULL),
--- 
--- ('Horny Report', 'Manual', 'Tiburón iraní', 'https://abcnews.com/GMA/News/navy-base-employee-critically-injured-shark-attack-florida/story?id=133730535', NULL),
--- 
--- ('Horny Report', 'Manual', 'Trunkiburon', 'https://www.google.com/amp/s/as.com/actualidad/sociedad/graban-por-primera-vez-un-tiburon-blanco-adulto-en-el-mar-mediterraneo-es-mas-probable-ganar-la-loteria-f202606-n/%3foutputType=amp', NULL),
--- 
--- ('Horny Report', 'Manual', 'TikTokers kelkel', 'https://allafrica.com/stories/202606120061.html', NULL),
--- 
--- ('Horny Report', 'Manual', 'Exportaciones cancheras', 'https://www.prensa-latina.cu/2026/06/13/uruguay-poca-poblacion-pero-mucho-talento-futbolistico-al-exterior/', NULL),
--- 
--- ('Horny Report', 'Manual', 'Tortugas espia', 'https://www.globaltimes.cn/page/202606/1363380.shtml', NULL),
--- 
--- ('Horny Report', 'Manual', 'Contra la Trata', 'https://sana.sy/es/local/2315905/', NULL),
+ ('Horny Report', 'Manual', 'Inmortal Vlad', 'https://www.elconfidencial.com/tecnologia/ciencia/2026-06-12/putin-150-anos-rusia-22500m-euros-1qrt_4370450/', NULL),
+
+ ('Horny Report', 'Manual', 'Remeras PaperClip', 'https://www.minutouno.com/sociedad/vendia-uniformes-militares-marketplace-lo-allanaron-y-tenia-un-arsenal-nazi-n6287180', NULL),
+ 
+ ('Horny Report', 'Manual', 'Ballena Tilly', 'https://www.terra.com.br/vida-e-estilo/pets/baleia-timmy-encontrada-morta-na-dinamarca-tera-a-gordura-transformada-em-biodiesel-e-biomassa-saiba-como-esse-processo-e-realizado,59bb36e8133d5b11ca98abecd433ea19djsfamqj.html', NULL),
+ 
+ ('Horny Report', 'Manual', 'PiroPuki', 'https://www.iltalehti.fi/kotimaa/a/fd86a7b9-57aa-40e5-be4e-7d8330b3fa29', NULL),
+ 
+('Horny Report', 'Manual', 'Alcohol Online', 'https://www.iltalehti.fi/kotimaa/a/84610517-788e-4e51-822f-b91a3301a3c2', NULL),
+
+('Horny Report', 'Manual', 'Taza de Coca', 'https://www.visir.is/g/20262895590d/grikki-med-tugi-kiloa-kokains-undir-folsku-golfi', NULL),
+
+ ('Horny Report', 'Manual', 'Machirulismo Ortodoxo', 'https://www.aurora-israel.co.il/polemica-en-israel-rabinos-de-yeshivot-anuncian-que-no-enviaran-alumnos-a-unidades-de-tanques-por-la-incorporacion-de-mujeres/#google_vignette', NULL),
+
+('Horny Report', 'Manual', 'Megabestialismo', 'https://www.nhm.ac.uk/discover/news/2026/june/worlds-largest-scorpion-revealed-415-million-year-old-fossils.html', NULL),
+ 
+ ('Horny Report', 'Manual', 'Boda Satanica', 'https://www.dailystar.co.uk/news/us-news/terrified-woman-flees-police-after-37276896', NULL),
+
+('Horny Report', 'Manual', 'Cancer Laboral', 'https://www.abcnyheter.no/nyheter/arbeidsrelatert-kreft-tar-langt-flere-liv-enn-arbeidsulykker/1562277', NULL),
+
+ ('Horny Report', 'Manual', 'Submarino Nazi', 'https://www.abcnyheter.no/nyheter/ekspertene-om-nazi-ubatvraket-kan-fa-katastrofale-folger-ved-heving/1563394', NULL),
+
+('Horny Report', 'Manual', 'Agua Dementus', 'https://www.vozpopuli.com/ciencia/los-cientificos-dan-la-voz-de-alarma-el-agua-potable-tiene-un-componente-que-puede-relacionarse-con-el-riesgo-de-demencia.html', NULL),
+
+ ('Horny Report', 'Manual', 'Laptops que vuelan', 'https://news.sky.com/story/hundreds-of-phones-and-laptops-lost-by-mod-at-potential-cost-of-more-than-1-6m-13551845', NULL),
+
+ ('Horny Report', 'Manual', 'Winston Love', 'https://actualidad.esrt.press/actualidad/610774-condenado-45-anos-prision-robar-200-sets-lego', NULL),
+ 
+('Horny Report', 'Manual', 'Banano de visita', 'https://www.prensa-latina.cu/2026/06/12/noboa-se-reunira-con-asesor-de-seguridad-de-trump-en-estados-unidos/', NULL),
+
+ ('Horny Report', 'Manual', 'Campaña Antihomeless', 'https://www.arabnews.com/node/2646856/saudi-arabia', NULL),
+ 
+('Horny Report', 'Manual', 'Diplomacia Religiosa', 'https://www.arabnews.com/node/2646970/saudi-arabia', NULL),
+
+('Horny Report', 'Manual', 'Notificacion Roja', 'https://www.sabah.com.tr/yasam/icisleri-bakanligi-acikladi-kirmizi-bultenle-aranan-90-suclu-turkiyeye-getirildi-7602151', NULL),
+
+('Horny Report', 'Manual', 'JAAC terrorista', 'https://www.arabnews.com/node/2646897/world', NULL),
+
+
+ ('Horny Report', 'Manual', 'Referi Negri', 'https://esrt.space/actualidad/610211-video-arbitro-deportado-eeuu-heroe-somalia', NULL),
+
+ ('Horny Report', 'Manual', 'Subnormalidad Influencer', 'https://www.losandes.com.ar/mundo/estados-unidos-advirtio-influencers-cara-al-mundial-podrian-ser-deportados-si-generan-ingresos-n5994428', NULL),
+ 
+ ('Horny Report', 'Manual', 'Extraterrestres Malvados', 'https://www.dailystar.co.uk/news/latest-news/psychic-warns-evil-aliens-abduct-37284206', NULL),
+
+ ('Horny Report', 'Manual', 'Drones Hackeados', 'https://www.arabnews.com/node/2646905/world', NULL),
+
+ ('Horny Report', 'Manual', 'Muerte Climatica', 'https://www.dawn.com/news/2006917/weather-pattern-el-nino-has-begun-says-us-agency-noaa', NULL),
+
+('Horny Report', 'Manual', 'Las chicas del tunel', 'https://www.jta.org/2026/06/11/united-states/after-dozens-of-jewish-girls-get-lost-in-ny-creek-tunnel-antisemitic-comments-follow-online', NULL),
+
+ ('Horny Report', 'Manual', 'Oficialmente Orcorrushers', 'https://www.ukrinform.es/rubric-crime/4128766-melnyk-califica-de-historica-la-inclusion-del-ejercito-ruso-en-la-lista-negra-de-la-onu-por-crimenes-sexuales.html', NULL),
+ 
+ ('Horny Report', 'Manual', 'Palille consular', 'https://www.africanews.com/2026/06/11/migrant-workers-exploitation-on-flagship-us-building-project-in-italy/', NULL),
+
+ ('Horny Report', 'Manual', 'Aldea OjoJuntista', 'https://esrt.space/actualidad/610154-ucranianos-echan-palazos-reclutadores', NULL),
+
+ ('Horny Report', 'Manual', 'Hesgeth sudao', 'https://www.cibercuba.com/noticias/2026-06-10-u1-e43231-s27061-nid331836-pete-hegseth-suda-tropas-guantanamo-asi-fue', NULL),
+
+ ('Horny Report', 'Manual', 'Madera Bolita', 'https://www.biobiochile.cl/noticias/internacional/america-latina/2026/06/11/allanan-aserraderos-en-bolivia-tras-decomiso-de-mas-de-100-toneladas-de-droga-en-puertos-chilenos.shtml', NULL),
+ 
+('Horny Report', 'Manual', 'Laboratorios pestosos', 'https://x.com/DNIGabbard/status/2065440568423944607?s=20', NULL),
+
+('Horny Report', 'Manual', 'El Chuta', 'https://www.infobae.com/mexico/2026/06/10/el-chuta-jefe-de-seguridad-del-cartel-de-sinaloa-habria-sido-localizado-sin-vida-en-la-comunidad-de-charay/', NULL),
+
+('Horny Report', 'Manual', 'Cataluña es sionista', 'https://www.enlacejudio.com/2026/06/07/hallan-los-primeros-manuscritos-hebreos-medievales-de-la-region-ocultos-durante-siglos-2/', NULL),
+ 
+ ('Horny Report', 'Manual', 'Orgia Insectoide', 'https://actualidad.esrt.press/actualidad/610673-insectos-cubrir-cielo-turquia', NULL),
+
+ ('Horny Report', 'Manual', 'Fitness antisemita', 'https://www.aurora-israel.co.il/informe-alerta-que-instagram-expone-a-usuarios-de-bienestar-y-fitness-a-contenido-antisemita/#google_vignette', NULL),
+ 
+ ('Horny Report', 'Manual', 'Grandes leyendas del deporte judio', 'https://www.jta.org/2026/06/11/sports/meet-matt-turner-the-only-jewish-player-on-team-usa-in-the-world-cup', NULL),
+ 
+ ('Horny Report', 'Manual', 'Cuatreros zambianos', 'https://allafrica.com/stories/202606120510.html', NULL),
+
+('Horny Report', 'Manual', 'Mundial escolar', 'https://www.africanews.com/2026/06/11/schoolchildren-in-haiti-stage-their-own-world-cup-in-call-for-peace/', NULL),
+
+ ('Horny Report', 'Manual', 'Claude LeRoy', 'https://www.africanews.com/2026/06/11/veteran-french-football-coach-to-lead-republic-of-the-congo-team/', NULL),
+
+ ('Horny Report', 'Manual', 'Dia del dron', 'https://www.ukrinform.es/rubric-society/4132625-establecido-en-ucrania-el-dia-de-las-fuerzas-de-sistemas-no-tripulados-de-las-fuerzas-armadas-de-ucrania.html', NULL),
+
+ ('Horny Report', 'Manual', 'Refugios estonios', 'https://avia-es.com/news/v-gorodah-estonii-nachali-ustanavlivat-mobilnye-betonnye-ubezhishcha-iz-za-ugroz-ukrainy', NULL),
+
+('Horny Report', 'Manual', 'Tiburón iraní', 'https://abcnews.com/GMA/News/navy-base-employee-critically-injured-shark-attack-florida/story?id=133730535', NULL),
+
+ ('Horny Report', 'Manual', 'Trunkiburon', 'https://www.google.com/amp/s/as.com/actualidad/sociedad/graban-por-primera-vez-un-tiburon-blanco-adulto-en-el-mar-mediterraneo-es-mas-probable-ganar-la-loteria-f202606-n/%3foutputType=amp', NULL),
+ 
+ ('Horny Report', 'Manual', 'TikTokers kelkel', 'https://allafrica.com/stories/202606120061.html', NULL),
+ 
+ ('Horny Report', 'Manual', 'Exportaciones cancheras', 'https://www.prensa-latina.cu/2026/06/13/uruguay-poca-poblacion-pero-mucho-talento-futbolistico-al-exterior/', NULL),
+
+('Horny Report', 'Manual', 'Tortugas espia', 'https://www.globaltimes.cn/page/202606/1363380.shtml', NULL),
+
+ ('Horny Report', 'Manual', 'Contra la Trata', 'https://sana.sy/es/local/2315905/', NULL),
 -- 
 -- ('Horny Report', 'Manual', 'Flopper londinense', 'https://www.europapress.es/economia/bolsa-00348/noticia-acs-dispara-lograr-filial-dragados-contrato-1000-millones-metro-londres-20260611183438.html', NULL),
 -- 
