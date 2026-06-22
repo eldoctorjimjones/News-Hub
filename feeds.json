@@ -85,5 +85,14 @@
     { "name": "El Periódico", "url": "https://www.elperiodico.com/es/rss/rss.xml", "cat": "España" },
     { "name": "HuffPost ES", "url": "https://www.huffingtonpost.es/feeds/index.xml", "cat": "España" },
     { "name": "Vozpópuli", "url": "https://www.vozpopuli.com/rss/", "cat": "España" }
+  { "name": "Reuters Top News", "url": "https://feeds.reuters.com/reuters/topNews", "cat": "General" },
+  { "name": "AP Top News", "url": "https://apnews.com/feed", "cat": "General" },
+  { "name": "Bloomberg Markets", "url": "https://feeds.bloomberg.com/markets/news.rss", "cat": "Tech" },
+  { "name": "Reuters Science", "url": "https://feeds.reuters.com/reuters/scienceNews", "cat": "Ciencia" },
+  { "name": "EFE Noticias", "url": "https://feeds.feedburner.com/efe/noticias", "cat": "España" },
+  { "name": "Europa Press Internacional", "url": "https://www.europapress.es/rss/rss.aspx?ch=00067", "cat": "Europa" },
+  { "name": "The Economist World", "url": "https://www.economist.com/world/rss.xml", "cat": "Europa" },
+  { "name": "Al Jazeera English", "url": "https://www.aljazeera.com/xml/rss/all.xml", "cat": "Asia" }
+]
   ]
 }
