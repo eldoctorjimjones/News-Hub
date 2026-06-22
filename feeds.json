@@ -92,7 +92,5 @@
   { "name": "EFE Noticias", "url": "https://feeds.feedburner.com/efe/noticias", "cat": "España" },
   { "name": "Europa Press Internacional", "url": "https://www.europapress.es/rss/rss.aspx?ch=00067", "cat": "Europa" },
   { "name": "The Economist World", "url": "https://www.economist.com/world/rss.xml", "cat": "Europa" },
-  { "name": "Al Jazeera English", "url": "https://www.aljazeera.com/xml/rss/all.xml", "cat": "Asia" }
-]
-  ]
+  { "name": "Al Jazeera English", "url": "https://www.aljazeera.com/xml/rss/all.xml", "cat": "Asia" }  
 }
