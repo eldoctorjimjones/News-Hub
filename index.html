@@ -77,7 +77,6 @@
 
         async function load() {
             try {
-                // Añadimos un timestamp (?t=) para evitar que el navegador guarde en caché datos viejos
                 const res = await fetch('/api/news?t=' + new Date().getTime());
                 allNews = await res.json();
                 loader.style.display = 'none';
@@ -106,9 +105,15 @@
         }
 
         function filter(cat, el) {
+            // Limpiamos botones
             document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-            if (el.tagName === 'BUTTON') el.classList.add('active');
+            if (el && el.tagName === 'BUTTON') el.classList.add('active');
             
+            // Si usamos el dropdown, reseteamos botones
+            if (el && el.tagName === 'SELECT') {
+                document.querySelector('button').classList.add('active'); // Opcional: marca 'Todas' como activa
+            }
+
             const filtered = (cat === 'Todas' || cat === '') ? allNews : allNews.filter(n => (n.category || '').toLowerCase().includes(cat.toLowerCase()));
             render(filtered);
         }
@@ -123,10 +128,11 @@
 
         function generateHornyMenu(data) {
             const select = document.getElementById('horny-dropdown');
-            // IMPORTANTE: Limpiamos el menú antes de añadir nada para evitar duplicados
             select.innerHTML = '<option value="">Horny Report 🎙️</option>';
             
-            const programs = [...new Set(data.map(n => n.category).filter(c => c && c.startsWith('Horny Report')))].sort();
+            // Filtramos las categorías que empiezan por 'Horny Report'
+            const programs = [...new Set(data.map(n => n.category).filter(c => c && c.toLowerCase().includes('horny report')))].sort();
+            
             programs.forEach(prog => {
                 const opt = document.createElement('option');
                 opt.value = prog; opt.innerText = prog;
@@ -137,8 +143,5 @@
         // Carga inicial
         load();
         
-        // Auto-refresh cada 30 segundos para que los datos estén siempre frescos
-        setInterval(load, 30000);
+        // ELIMINADO: setInterval(load, 30000);  <-- ¡ESTO CAUSABA EL RESETEO!
     </script>
-</body>
-</html>
